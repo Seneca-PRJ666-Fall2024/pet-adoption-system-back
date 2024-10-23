@@ -3,16 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Register Page</title>
 </head>
 <body>
 <h2>Login</h2>
-<form action="api/user/process-login" method="post">
+<form action="api/user/process-register" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username"><br><br>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password"><br><br>
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
 </form>
 
 <p th:text="${message}"></p> <!-- Displays login result message -->

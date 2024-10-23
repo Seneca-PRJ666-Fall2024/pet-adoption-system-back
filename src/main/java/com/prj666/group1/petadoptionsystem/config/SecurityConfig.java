@@ -27,19 +27,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/public/**",
-                                "/api/users/register",
-                                "/login", "/perform-login","/css/**", "/js/**").permitAll() // Allow access to login and other resources
-                        .anyRequest().authenticated() // All other requests require authentication
+                        .anyRequest().permitAll() // Permit all requests without authentication
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/perform-login")
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .permitAll()
-                );
+                .csrf(csrf -> csrf.disable()) // Disable CSRF if needed
+                .formLogin(form -> form.disable());
 
         return http.build();
     }

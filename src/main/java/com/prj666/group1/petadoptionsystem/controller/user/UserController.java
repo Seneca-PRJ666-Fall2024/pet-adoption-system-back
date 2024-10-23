@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -35,29 +35,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Login Page</title>
-                </head>
-                <body>
-                <h2>Login</h2>
-                <form action="/api/users/process-login" method="post">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username"><br><br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password"><br><br>
-                    <button type="submit">Login</button>
-                </form>
-                </body>
-                </html>
-                """;
-    }
-
     @PostMapping("/process-login")
     public String processLogin(
             @RequestParam String username,
@@ -67,7 +44,7 @@ public class UserController {
         Optional<User> user = userService.login(username, password);
 
         if (user.isPresent()) {
-            return "Login successful for user: ";
+            return "Login successful for user: " + user.get().getEmail();
         } else {
             return  "Invalid username or password";
         }
@@ -92,21 +69,21 @@ public class UserController {
                 .body("User registered successfully");
     }
 
-    @GetMapping("/test-register")
+    @PostMapping("/process-register")
     public ResponseEntity<String> testRegister(
-            @RequestParam String email,
+            @RequestParam String username,
             @RequestParam String password
     ) {
 
         // Check if the username already exists
-        if (userService.existsByEmail(email)) {
+        if (userService.existsByEmail(username)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Test user already exists");
         }
 
         // Create and save the test user
         User testUser = new User();
-        testUser.setEmail(email);
+        testUser.setEmail(username);
         testUser.setPassword(password);
         userService.saveUser(testUser);
 

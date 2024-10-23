@@ -19,7 +19,7 @@ public class UserService {
     public Optional<User> login(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
         // Perform password verification logic here
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
             return user;
         }
         return Optional.empty();
