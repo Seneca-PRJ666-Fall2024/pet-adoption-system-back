@@ -1,6 +1,6 @@
 package com.prj666.group1.petadoptionsystem.repository.user;
 
-import com.prj666.group1.petadoptionsystem.model.user.User;
+import com.prj666.group1.petadoptionsystem.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
