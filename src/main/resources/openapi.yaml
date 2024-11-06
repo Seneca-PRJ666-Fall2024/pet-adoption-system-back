@@ -7,11 +7,11 @@ info:
     name: PRJ666 - Group 1 - 'Pet Adoption System' Team
     email: support@petadoption.com
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: http://localhost:8080/api/v2
     description: Local development server
 
 paths:
-  /register:
+  /user/register:
     post:
       summary: Register a new user
       description: Registers a new user with an email, password, and account type (Pet Adopter or Pet Shelter).
@@ -46,7 +46,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
 
-  /login:
+  /user/login:
     post:
       summary: Login a user
       description: Logs in a user using email and password, and returns a JWT token.
@@ -248,6 +248,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+
+  /adoptionStory:
+    get:
+      summary: Retrieve a list of adoption stories
+      description: Returns a list of adoption stories with the specified number of objects.
+      parameters:
+        - in: query
+          name: N
+          schema:
+            type: integer
+            minimum: 1
+            default: 5
+          description: The number of adoption story objects to return
+      responses:
+        '200':
+          description: A list of adoption stories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    author:
+                      type: string
+                      description: The author of the adoption story
+                      example: "John Doe"
+                    title:
+                      type: string
+                      description: The title of the adoption story
+                      example: "A Happy Ending for Max"
+                    text:
+                      type: string
+                      description: The content of the adoption story
+                      example: "Max was found wandering the streets and was taken in by a local shelter. After weeks of care, he found a loving home with the Doe family."
+
 
 components:
   schemas:

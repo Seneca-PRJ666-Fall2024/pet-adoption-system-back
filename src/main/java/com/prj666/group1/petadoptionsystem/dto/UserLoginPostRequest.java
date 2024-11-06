@@ -16,55 +16,55 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * UserUpdateContactsPutRequest
+ * UserLoginPostRequest
  */
 
-@JsonTypeName("_user_update_contacts_put_request")
+@JsonTypeName("_user_login_post_request")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class UserUpdateContactsPutRequest {
+public class UserLoginPostRequest {
 
-  private String phone;
+  private String email;
 
-  private String address;
+  private String password;
 
-  public UserUpdateContactsPutRequest phone(String phone) {
-    this.phone = phone;
+  public UserLoginPostRequest email(String email) {
+    this.email = email;
     return this;
   }
 
   /**
-   * Get phone
-   * @return phone
+   * Get email
+   * @return email
    */
   
-  @Schema(name = "phone", example = "123-456-7890", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("phone")
-  public String getPhone() {
-    return phone;
+  @Schema(name = "email", example = "adopter@example.com", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("email")
+  public String getEmail() {
+    return email;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
-  public UserUpdateContactsPutRequest address(String address) {
-    this.address = address;
+  public UserLoginPostRequest password(String password) {
+    this.password = password;
     return this;
   }
 
   /**
-   * Get address
-   * @return address
+   * Get password
+   * @return password
    */
   
-  @Schema(name = "address", example = "123 Pet Lane", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("address")
-  public String getAddress() {
-    return address;
+  @Schema(name = "password", example = "P@ssw0rd", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("password")
+  public String getPassword() {
+    return password;
   }
 
-  public void setAddress(String address) {
-    this.address = address;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   @Override
@@ -75,22 +75,22 @@ public class UserUpdateContactsPutRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserUpdateContactsPutRequest userUpdateContactsPutRequest = (UserUpdateContactsPutRequest) o;
-    return Objects.equals(this.phone, userUpdateContactsPutRequest.phone) &&
-        Objects.equals(this.address, userUpdateContactsPutRequest.address);
+    UserLoginPostRequest userLoginPostRequest = (UserLoginPostRequest) o;
+    return Objects.equals(this.email, userLoginPostRequest.email) &&
+        Objects.equals(this.password, userLoginPostRequest.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(phone, address);
+    return Objects.hash(email, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserUpdateContactsPutRequest {\n");
-    sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
-    sb.append("    address: ").append(toIndentedString(address)).append("\n");
+    sb.append("class UserLoginPostRequest {\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }

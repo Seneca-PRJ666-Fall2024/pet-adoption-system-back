@@ -5,8 +5,7 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
-import com.prj666.group1.petadoptionsystem.dto.PetUpdateInfoPutRequest;
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStoryGet200ResponseInner;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,34 +34,35 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
-@Tag(name = "pet", description = "the pet API")
+@Tag(name = "adoptionStory", description = "the adoptionStory API")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
-public interface PetApi {
+public interface AdoptionStoryApi {
 
     /**
-     * PUT /pet/update-info : Update pet information
+     * GET /adoptionStory : Retrieve a list of adoption stories
+     * Returns a list of adoption stories with the specified number of objects.
      *
-     * @param petUpdateInfoPutRequest  (required)
-     * @return Pet information updated successfully (status code 200)
+     * @param N The number of adoption story objects to return (optional, default to 5)
+     * @return A list of adoption stories (status code 200)
      */
     @Operation(
-        operationId = "petUpdateInfoPut",
-        summary = "Update pet information",
+        operationId = "adoptionStoryGet",
+        summary = "Retrieve a list of adoption stories",
+        description = "Returns a list of adoption stories with the specified number of objects.",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Pet information updated successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            @ApiResponse(responseCode = "200", description = "A list of adoption stories", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AdoptionStoryGet200ResponseInner.class)))
             })
         }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/pet/update-info",
-        produces = { "application/json" },
-        consumes = { "application/json" }
+        method = RequestMethod.GET,
+        value = "/adoptionStory",
+        produces = { "application/json" }
     )
     
-    ResponseEntity<ModelApiResponse> petUpdateInfoPut(
-        @Parameter(name = "PetUpdateInfoPutRequest", description = "", required = true) @Valid @RequestBody PetUpdateInfoPutRequest petUpdateInfoPutRequest
+    ResponseEntity<List<AdoptionStoryGet200ResponseInner>> adoptionStoryGet(
+        @Min(1) @Parameter(name = "N", description = "The number of adoption story objects to return", in = ParameterIn.QUERY) @Valid @RequestParam(value = "N", required = false, defaultValue = "5") Integer N
     );
 
 }

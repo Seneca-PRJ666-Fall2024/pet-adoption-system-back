@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * Recommendation
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-31T17:36:43.291576-04:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Recommendation {
 
   private Integer id;

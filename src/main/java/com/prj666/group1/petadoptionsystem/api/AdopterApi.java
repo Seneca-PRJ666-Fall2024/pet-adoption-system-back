@@ -34,10 +34,10 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-31T17:36:43.291576-04:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "adopter", description = "the adopter API")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v1}")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
 public interface AdopterApi {
 
     /**

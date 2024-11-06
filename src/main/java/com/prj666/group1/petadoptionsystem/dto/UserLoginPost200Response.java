@@ -16,18 +16,20 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ModelApiResponse
+ * UserLoginPost200Response
  */
 
-@JsonTypeName("ApiResponse")
+@JsonTypeName("_user_login_post_200_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class ModelApiResponse {
+public class UserLoginPost200Response {
 
   private Boolean success;
 
   private String message;
 
-  public ModelApiResponse success(Boolean success) {
+  private String token;
+
+  public UserLoginPost200Response success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -47,7 +49,7 @@ public class ModelApiResponse {
     this.success = success;
   }
 
-  public ModelApiResponse message(String message) {
+  public UserLoginPost200Response message(String message) {
     this.message = message;
     return this;
   }
@@ -57,7 +59,7 @@ public class ModelApiResponse {
    * @return message
    */
   
-  @Schema(name = "message", example = "Operation completed successfully", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "message", example = "Login successful", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -65,6 +67,26 @@ public class ModelApiResponse {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public UserLoginPost200Response token(String token) {
+    this.token = token;
+    return this;
+  }
+
+  /**
+   * Get token
+   * @return token
+   */
+  
+  @Schema(name = "token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("token")
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
   }
 
   @Override
@@ -75,22 +97,24 @@ public class ModelApiResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModelApiResponse _apiResponse = (ModelApiResponse) o;
-    return Objects.equals(this.success, _apiResponse.success) &&
-        Objects.equals(this.message, _apiResponse.message);
+    UserLoginPost200Response userLoginPost200Response = (UserLoginPost200Response) o;
+    return Objects.equals(this.success, userLoginPost200Response.success) &&
+        Objects.equals(this.message, userLoginPost200Response.message) &&
+        Objects.equals(this.token, userLoginPost200Response.token);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(success, message);
+    return Objects.hash(success, message, token);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelApiResponse {\n");
+    sb.append("class UserLoginPost200Response {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("}");
     return sb.toString();
   }

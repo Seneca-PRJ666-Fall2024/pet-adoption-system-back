@@ -6,6 +6,9 @@
 package com.prj666.group1.petadoptionsystem.api;
 
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.UserLoginPost200Response;
+import com.prj666.group1.petadoptionsystem.dto.UserLoginPostRequest;
+import com.prj666.group1.petadoptionsystem.dto.UserRegisterPostRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserUpdateContactsPutRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,11 +36,77 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-31T17:36:43.291576-04:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T16:27:58.972580500-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "user", description = "the user API")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v1}")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
 public interface UserApi {
+
+    /**
+     * POST /user/login : Login a user
+     * Logs in a user using email and password, and returns a JWT token.
+     *
+     * @param userLoginPostRequest  (required)
+     * @return Login successful (status code 200)
+     *         or Invalid email or password (status code 401)
+     */
+    @Operation(
+        operationId = "userLoginPost",
+        summary = "Login a user",
+        description = "Logs in a user using email and password, and returns a JWT token.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Login successful", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UserLoginPost200Response.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Invalid email or password", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/user/login",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<UserLoginPost200Response> userLoginPost(
+        @Parameter(name = "UserLoginPostRequest", description = "", required = true) @Valid @RequestBody UserLoginPostRequest userLoginPostRequest
+    );
+
+
+    /**
+     * POST /user/register : Register a new user
+     * Registers a new user with an email, password, and account type (Pet Adopter or Pet Shelter).
+     *
+     * @param userRegisterPostRequest  (required)
+     * @return User registered successfully (status code 201)
+     *         or Email is already taken (status code 400)
+     */
+    @Operation(
+        operationId = "userRegisterPost",
+        summary = "Register a new user",
+        description = "Registers a new user with an email, password, and account type (Pet Adopter or Pet Shelter).",
+        responses = {
+            @ApiResponse(responseCode = "201", description = "User registered successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Email is already taken", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/user/register",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<ModelApiResponse> userRegisterPost(
+        @Parameter(name = "UserRegisterPostRequest", description = "", required = true) @Valid @RequestBody UserRegisterPostRequest userRegisterPostRequest
+    );
+
 
     /**
      * PUT /user/update-contacts : Update user contact information
