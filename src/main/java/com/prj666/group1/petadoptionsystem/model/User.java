@@ -1,6 +1,6 @@
 package com.prj666.group1.petadoptionsystem.model;
 
-import com.prj666.group1.petadoptionsystem.dto.RegisterPostRequest;
+import com.prj666.group1.petadoptionsystem.dto.UserRegisterPostRequest;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,7 +10,7 @@ public class User {
     private String id;
     private String email;
     private String password;
-    private RegisterPostRequest.AccountTypeEnum accountType;
+    private UserRegisterPostRequest.AccountTypeEnum accountType;
     private String token;
 
     public String getId() {
@@ -37,11 +37,11 @@ public class User {
         this.password = password;
     }
 
-    public RegisterPostRequest.AccountTypeEnum getAccountType() {
+    public UserRegisterPostRequest.AccountTypeEnum getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(RegisterPostRequest.AccountTypeEnum accountType) {
+    public void setAccountType(UserRegisterPostRequest.AccountTypeEnum accountType) {
         this.accountType = accountType;
     }
 

@@ -1,7 +1,7 @@
 package com.prj666.group1.petadoptionsystem.service.user;
 
 import com.prj666.group1.petadoptionsystem.model.User;
-import com.prj666.group1.petadoptionsystem.repository.user.UserRepository;
+import com.prj666.group1.petadoptionsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
