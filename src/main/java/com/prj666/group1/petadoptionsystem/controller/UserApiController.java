@@ -3,11 +3,14 @@ package com.prj666.group1.petadoptionsystem.controller;
 import com.prj666.group1.petadoptionsystem.api.UserApi;
 import com.prj666.group1.petadoptionsystem.dto.*;
 import com.prj666.group1.petadoptionsystem.model.User;
-import com.prj666.group1.petadoptionsystem.service.user.UserService;
+import com.prj666.group1.petadoptionsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Optional;
 
@@ -56,6 +59,21 @@ public class UserApiController implements UserApi {
 
     @Override
     public ResponseEntity<ModelApiResponse> userUpdateContactsPut(UserUpdateContactsPutRequest userUpdateContactsPutRequest) {
-        return null;
+
+        ModelApiResponse resp = new ModelApiResponse();
+        User user;
+        try {
+            user = userService.getUserFromContext();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(resp.success(false).message(e.getMessage()));
+        }
+
+        user.setAddress(userUpdateContactsPutRequest.getAddress());
+        user.setPhone(userUpdateContactsPutRequest.getPhone());
+        userService.saveUser(user);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(resp.success(true).message("User updated successfully"));
     }
 }

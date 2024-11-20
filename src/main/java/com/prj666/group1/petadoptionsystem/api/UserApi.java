@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-06T19:39:54.912418600-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "user", description = "the user API")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
@@ -121,6 +121,9 @@ public interface UserApi {
             @ApiResponse(responseCode = "200", description = "User contacts updated successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
