@@ -16,18 +16,18 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ShelterUpdateContactsPutRequest
+ * UserUpdateProfilePutRequest
  */
 
-@JsonTypeName("_shelter_update_contacts_put_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class ShelterUpdateContactsPutRequest {
+@JsonTypeName("_user_update_profile_put_request")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class UserUpdateProfilePutRequest {
 
   private String phone;
 
   private String address;
 
-  public ShelterUpdateContactsPutRequest phone(String phone) {
+  public UserUpdateProfilePutRequest phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -37,7 +37,7 @@ public class ShelterUpdateContactsPutRequest {
    * @return phone
    */
   
-  @Schema(name = "phone", example = "321-654-0987", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "phone", example = "123-456-7890", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -47,7 +47,7 @@ public class ShelterUpdateContactsPutRequest {
     this.phone = phone;
   }
 
-  public ShelterUpdateContactsPutRequest address(String address) {
+  public UserUpdateProfilePutRequest address(String address) {
     this.address = address;
     return this;
   }
@@ -57,7 +57,7 @@ public class ShelterUpdateContactsPutRequest {
    * @return address
    */
   
-  @Schema(name = "address", example = "456 Shelter Street", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "address", example = "123 Pet Lane", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address")
   public String getAddress() {
     return address;
@@ -75,9 +75,9 @@ public class ShelterUpdateContactsPutRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ShelterUpdateContactsPutRequest shelterUpdateContactsPutRequest = (ShelterUpdateContactsPutRequest) o;
-    return Objects.equals(this.phone, shelterUpdateContactsPutRequest.phone) &&
-        Objects.equals(this.address, shelterUpdateContactsPutRequest.address);
+    UserUpdateProfilePutRequest userUpdateProfilePutRequest = (UserUpdateProfilePutRequest) o;
+    return Objects.equals(this.phone, userUpdateProfilePutRequest.phone) &&
+        Objects.equals(this.address, userUpdateProfilePutRequest.address);
   }
 
   @Override
@@ -88,7 +88,7 @@ public class ShelterUpdateContactsPutRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ShelterUpdateContactsPutRequest {\n");
+    sb.append("class UserUpdateProfilePutRequest {\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("}");

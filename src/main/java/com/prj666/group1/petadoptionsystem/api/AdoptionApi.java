@@ -5,7 +5,9 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200ResponseInner;
 import com.prj666.group1.petadoptionsystem.dto.AdoptionStoryGet200ResponseInner;
+import com.prj666.group1.petadoptionsystem.dto.FailureApiResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,14 +34,46 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
-@Tag(name = "adoptionStory", description = "the adoptionStory API")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
-public interface AdoptionStoryApi {
+@Tag(name = "adoption", description = "Operations about Adoptions")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
+public interface AdoptionApi {
 
     /**
-     * GET /adoptionStory : Retrieve a list of adoption stories
+     * GET /adoption/status : Retrieve adoption status
+     * Fetches the current status of adoptions for the authenticated adopter.
+     *
+     * @return Adoption status retrieved successfully (status code 200)
+     *         or Unauthorized access (status code 401)
+     */
+    @Operation(
+        operationId = "adoptionStatusGet",
+        summary = "Retrieve adoption status",
+        description = "Fetches the current status of adoptions for the authenticated adopter.",
+        tags = { "adoption" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Adoption status retrieved successfully", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AdoptionStatusGet200ResponseInner.class)))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/adoption/status",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<List<AdoptionStatusGet200ResponseInner>> adoptionStatusGet(
+        
+    );
+
+
+    /**
+     * GET /adoption/story : Retrieve a list of adoption stories
      * Returns a list of adoption stories with the specified number of objects.
      *
      * @param N The number of adoption story objects to return (optional, default to 5)
@@ -49,6 +83,7 @@ public interface AdoptionStoryApi {
         operationId = "adoptionStoryGet",
         summary = "Retrieve a list of adoption stories",
         description = "Returns a list of adoption stories with the specified number of objects.",
+        tags = { "adoption" },
         responses = {
             @ApiResponse(responseCode = "200", description = "A list of adoption stories", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AdoptionStoryGet200ResponseInner.class)))
@@ -57,7 +92,7 @@ public interface AdoptionStoryApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/adoptionStory",
+        value = "/adoption/story",
         produces = { "application/json" }
     )
     

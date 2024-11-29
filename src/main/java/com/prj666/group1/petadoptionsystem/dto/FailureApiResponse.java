@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -16,18 +15,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ModelApiResponse
+ * FailureApiResponse
  */
 
-@JsonTypeName("ApiResponse")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class ModelApiResponse {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class FailureApiResponse {
 
   private Boolean success;
 
   private String message;
 
-  public ModelApiResponse success(Boolean success) {
+  public FailureApiResponse success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -47,7 +45,7 @@ public class ModelApiResponse {
     this.success = success;
   }
 
-  public ModelApiResponse message(String message) {
+  public FailureApiResponse message(String message) {
     this.message = message;
     return this;
   }
@@ -75,9 +73,9 @@ public class ModelApiResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModelApiResponse _apiResponse = (ModelApiResponse) o;
-    return Objects.equals(this.success, _apiResponse.success) &&
-        Objects.equals(this.message, _apiResponse.message);
+    FailureApiResponse failureApiResponse = (FailureApiResponse) o;
+    return Objects.equals(this.success, failureApiResponse.success) &&
+        Objects.equals(this.message, failureApiResponse.message);
   }
 
   @Override
@@ -88,7 +86,7 @@ public class ModelApiResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelApiResponse {\n");
+    sb.append("class FailureApiResponse {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");

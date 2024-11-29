@@ -16,18 +16,18 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ShelterAddPetPostRequest
+ * PetUpdateProfilePutRequest
  */
 
-@JsonTypeName("_shelter_add_pet_post_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class ShelterAddPetPostRequest {
+@JsonTypeName("_pet_update_profile_put_request")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class PetUpdateProfilePutRequest {
 
   private String name;
 
   private String comments;
 
-  public ShelterAddPetPostRequest name(String name) {
+  public PetUpdateProfilePutRequest name(String name) {
     this.name = name;
     return this;
   }
@@ -47,7 +47,7 @@ public class ShelterAddPetPostRequest {
     this.name = name;
   }
 
-  public ShelterAddPetPostRequest comments(String comments) {
+  public PetUpdateProfilePutRequest comments(String comments) {
     this.comments = comments;
     return this;
   }
@@ -57,7 +57,7 @@ public class ShelterAddPetPostRequest {
    * @return comments
    */
   
-  @Schema(name = "comments", example = "Friendly and playful", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "comments", example = "Updated comments about Buddy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comments")
   public String getComments() {
     return comments;
@@ -75,9 +75,9 @@ public class ShelterAddPetPostRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ShelterAddPetPostRequest shelterAddPetPostRequest = (ShelterAddPetPostRequest) o;
-    return Objects.equals(this.name, shelterAddPetPostRequest.name) &&
-        Objects.equals(this.comments, shelterAddPetPostRequest.comments);
+    PetUpdateProfilePutRequest petUpdateProfilePutRequest = (PetUpdateProfilePutRequest) o;
+    return Objects.equals(this.name, petUpdateProfilePutRequest.name) &&
+        Objects.equals(this.comments, petUpdateProfilePutRequest.comments);
   }
 
   @Override
@@ -88,7 +88,7 @@ public class ShelterAddPetPostRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ShelterAddPetPostRequest {\n");
+    sb.append("class PetUpdateProfilePutRequest {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    comments: ").append(toIndentedString(comments)).append("\n");
     sb.append("}");

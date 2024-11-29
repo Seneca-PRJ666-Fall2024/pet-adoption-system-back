@@ -1,7 +1,10 @@
 package com.prj666.group1.petadoptionsystem.service;
 
 import com.prj666.group1.petadoptionsystem.auth.JwtTokenProvider;
+import com.prj666.group1.petadoptionsystem.model.Attribute;
+import com.prj666.group1.petadoptionsystem.model.Preference;
 import com.prj666.group1.petadoptionsystem.model.User;
+import com.prj666.group1.petadoptionsystem.repository.PreferenceRepository;
 import com.prj666.group1.petadoptionsystem.repository.UserRepository;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +29,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PreferenceRepository preferenceRepository;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -77,5 +85,13 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("Unauthenticated user");
         }
+    }
+
+    public void updateUserPreferences(User user, Collection<Attribute> preferences) {
+        List<Preference> userPrefs = preferences.stream()
+                        .map(pref -> new Preference(user.getId(), pref.getId()))
+                                .toList();
+        preferenceRepository.deleteByUserId(user.getId());
+        preferenceRepository.saveAll(userPrefs);
     }
 }

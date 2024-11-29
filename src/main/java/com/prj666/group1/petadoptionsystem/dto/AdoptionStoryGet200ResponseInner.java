@@ -19,8 +19,8 @@ import jakarta.annotation.Generated;
  * AdoptionStoryGet200ResponseInner
  */
 
-@JsonTypeName("_adoptionStory_get_200_response_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@JsonTypeName("_adoption_story_get_200_response_inner")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class AdoptionStoryGet200ResponseInner {
 
   private String author;

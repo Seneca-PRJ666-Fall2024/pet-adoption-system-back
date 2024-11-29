@@ -10,17 +10,13 @@ public class User {
     private String id;
     private String email;
     private String password;
-    private UserRegisterPostRequest.AccountTypeEnum accountType;
+    private UserRegisterPostRequest.RoleEnum accountType;
     private String token;
     private String address;
     private String phone;
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -39,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public UserRegisterPostRequest.AccountTypeEnum getAccountType() {
+    public UserRegisterPostRequest.RoleEnum getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(UserRegisterPostRequest.AccountTypeEnum accountType) {
+    public void setAccountType(UserRegisterPostRequest.RoleEnum accountType) {
         this.accountType = accountType;
     }
 

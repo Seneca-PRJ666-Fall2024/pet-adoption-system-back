@@ -36,7 +36,7 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v2/adoptionStory", "/api/v2/user/login", "/api/v2/user/register").permitAll() // Public endpoints
+                        .requestMatchers("/api/v4/adoption/story", "/api/v4/user/login", "/api/v4/user/register").permitAll() // Public endpoints
                         .anyRequest().authenticated() // All other endpoints require authentication
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter

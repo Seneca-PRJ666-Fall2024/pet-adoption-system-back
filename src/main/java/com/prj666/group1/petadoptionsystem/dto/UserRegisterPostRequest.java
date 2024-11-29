@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_register_post_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserRegisterPostRequest {
 
   private String email;
@@ -29,16 +29,16 @@ public class UserRegisterPostRequest {
   private String password;
 
   /**
-   * Gets or Sets accountType
+   * Gets or Sets role
    */
-  public enum AccountTypeEnum {
+  public enum RoleEnum {
     ADOPTER("Pet Adopter"),
     
     SHELTER("Pet Shelter");
 
     private String value;
 
-    AccountTypeEnum(String value) {
+    RoleEnum(String value) {
       this.value = value;
     }
 
@@ -53,8 +53,8 @@ public class UserRegisterPostRequest {
     }
 
     @JsonCreator
-    public static AccountTypeEnum fromValue(String value) {
-      for (AccountTypeEnum b : AccountTypeEnum.values()) {
+    public static RoleEnum fromValue(String value) {
+      for (RoleEnum b : RoleEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -63,7 +63,7 @@ public class UserRegisterPostRequest {
     }
   }
 
-  private AccountTypeEnum accountType;
+  private RoleEnum role;
 
   public UserRegisterPostRequest email(String email) {
     this.email = email;
@@ -105,24 +105,24 @@ public class UserRegisterPostRequest {
     this.password = password;
   }
 
-  public UserRegisterPostRequest accountType(AccountTypeEnum accountType) {
-    this.accountType = accountType;
+  public UserRegisterPostRequest role(RoleEnum role) {
+    this.role = role;
     return this;
   }
 
   /**
-   * Get accountType
-   * @return accountType
+   * Get role
+   * @return role
    */
   
-  @Schema(name = "accountType", example = "Pet Adopter", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("accountType")
-  public AccountTypeEnum getAccountType() {
-    return accountType;
+  @Schema(name = "role", example = "Pet Adopter", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("role")
+  public RoleEnum getRole() {
+    return role;
   }
 
-  public void setAccountType(AccountTypeEnum accountType) {
-    this.accountType = accountType;
+  public void setRole(RoleEnum role) {
+    this.role = role;
   }
 
   @Override
@@ -136,12 +136,12 @@ public class UserRegisterPostRequest {
     UserRegisterPostRequest userRegisterPostRequest = (UserRegisterPostRequest) o;
     return Objects.equals(this.email, userRegisterPostRequest.email) &&
         Objects.equals(this.password, userRegisterPostRequest.password) &&
-        Objects.equals(this.accountType, userRegisterPostRequest.accountType);
+        Objects.equals(this.role, userRegisterPostRequest.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, password, accountType);
+    return Objects.hash(email, password, role);
   }
 
   @Override
@@ -150,7 +150,7 @@ public class UserRegisterPostRequest {
     sb.append("class UserRegisterPostRequest {\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
-    sb.append("    accountType: ").append(toIndentedString(accountType)).append("\n");
+    sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("}");
     return sb.toString();
   }

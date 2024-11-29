@@ -5,8 +5,8 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
 import com.prj666.group1.petadoptionsystem.dto.Recommendation;
+import com.prj666.group1.petadoptionsystem.dto.SuccessApiResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,46 +33,48 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
-@Tag(name = "recommendation", description = "the recommendation API")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
-public interface RecommendationApi {
+@Tag(name = "matching", description = "Operations about Adopters")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
+public interface MatchingApi {
 
     /**
-     * POST /recommendation/{id}/accept : Accept a recommendation and create an adoption
+     * POST /matching/recommendation/{id}/accept : Accept a recommendation and create an adoption
      *
      * @param id The ID of the recommendation to accept (required)
      * @return Recommendation accepted, adoption created (status code 201)
      */
     @Operation(
-        operationId = "recommendationIdAcceptPost",
+        operationId = "matchingRecommendationIdAcceptPost",
         summary = "Accept a recommendation and create an adoption",
+        tags = { "matching" },
         responses = {
             @ApiResponse(responseCode = "201", description = "Recommendation accepted, adoption created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/recommendation/{id}/accept",
+        value = "/matching/recommendation/{id}/accept",
         produces = { "application/json" }
     )
     
-    ResponseEntity<ModelApiResponse> recommendationIdAcceptPost(
+    ResponseEntity<SuccessApiResponse> matchingRecommendationIdAcceptPost(
         @Parameter(name = "id", description = "The ID of the recommendation to accept", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     );
 
 
     /**
-     * GET /recommendation/next : Get the next recommendation for the adopter
+     * GET /matching/recommendation/next : Get the next recommendation for the adopter
      *
      * @return The next recommendation item (status code 200)
      */
     @Operation(
-        operationId = "recommendationNextGet",
+        operationId = "matchingRecommendationNextGet",
         summary = "Get the next recommendation for the adopter",
+        tags = { "matching" },
         responses = {
             @ApiResponse(responseCode = "200", description = "The next recommendation item", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Recommendation.class))
@@ -81,11 +83,37 @@ public interface RecommendationApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/recommendation/next",
+        value = "/matching/recommendation/next",
         produces = { "application/json" }
     )
     
-    ResponseEntity<Recommendation> recommendationNextGet(
+    ResponseEntity<Recommendation> matchingRecommendationNextGet(
+        
+    );
+
+
+    /**
+     * GET /matching/recommendations : Get a list of recommended pets based on preferences
+     *
+     * @return A list of recommended pets (status code 200)
+     */
+    @Operation(
+        operationId = "matchingRecommendationsGet",
+        summary = "Get a list of recommended pets based on preferences",
+        tags = { "matching" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "A list of recommended pets", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Recommendation.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/matching/recommendations",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<List<Recommendation>> matchingRecommendationsGet(
         
     );
 

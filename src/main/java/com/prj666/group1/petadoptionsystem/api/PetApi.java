@@ -5,8 +5,10 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
-import com.prj666.group1.petadoptionsystem.dto.PetUpdateInfoPutRequest;
+import com.prj666.group1.petadoptionsystem.dto.FailureApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.PetAddProfilePostRequest;
+import com.prj666.group1.petadoptionsystem.dto.PetUpdateProfilePutRequest;
+import com.prj666.group1.petadoptionsystem.dto.SuccessApiResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,36 +35,175 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-20T15:50:21.434716100-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
-@Tag(name = "pet", description = "the pet API")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v2}")
+@Tag(name = "pet", description = "Operations about Pets")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
 public interface PetApi {
 
     /**
-     * PUT /pet/update-info : Update pet information
+     * POST /pet/add-profile : Add a new pet profile to the system
+     * Add a new pet profile to the system.
      *
-     * @param petUpdateInfoPutRequest  (required)
-     * @return Pet information updated successfully (status code 200)
+     * @param petAddProfilePostRequest  (required)
+     * @return Pet added successfully (status code 201)
+     *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "petUpdateInfoPut",
-        summary = "Update pet information",
+        operationId = "petAddProfilePost",
+        summary = "Add a new pet profile to the system",
+        description = "Add a new pet profile to the system.",
+        tags = { "pet" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Pet information updated successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            @ApiResponse(responseCode = "201", description = "Pet added successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class)),
+                @Content(mediaType = "application/xml", schema = @Schema(implementation = SuccessApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "405", description = "Invalid input", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class)),
+                @Content(mediaType = "application/xml", schema = @Schema(implementation = FailureApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/pet/add-profile",
+        produces = { "application/json", "application/xml" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<SuccessApiResponse> petAddProfilePost(
+        @Parameter(name = "PetAddProfilePostRequest", description = "", required = true) @Valid @RequestBody PetAddProfilePostRequest petAddProfilePostRequest
+    );
+
+
+    /**
+     * DELETE /pet/delete-profile/{petId} : Deletes a pet profile
+     * Deletes the pet profile with the specified ID.
+     *
+     * @param petId The unique ID of the pet profile to delete. (required)
+     * @return Pet profile successfully deleted. (status code 204)
+     *         or Invalid pet profile value (status code 400)
+     *         or Unauthorized access. (status code 401)
+     *         or Forbidden. User does not have permission to delete this profile. (status code 403)
+     *         or Pet not found. (status code 404)
+     */
+    @Operation(
+        operationId = "petDeleteProfilePetIdDelete",
+        summary = "Deletes a pet profile",
+        description = "Deletes the pet profile with the specified ID.",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Pet profile successfully deleted."),
+            @ApiResponse(responseCode = "400", description = "Invalid pet profile value"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access."),
+            @ApiResponse(responseCode = "403", description = "Forbidden. User does not have permission to delete this profile."),
+            @ApiResponse(responseCode = "404", description = "Pet not found.")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = "/pet/delete-profile/{petId}"
+    )
+    
+    ResponseEntity<Void> petDeleteProfilePetIdDelete(
+        @Parameter(name = "petId", description = "The unique ID of the pet profile to delete.", required = true, in = ParameterIn.PATH) @PathVariable("petId") Long petId
+    );
+
+
+    /**
+     * GET /pet/get-profile : Retrieve pet profile information
+     * Fetches the pet profile details.
+     *
+     * @return Profile details retrieved successfully (status code 200)
+     *         or Unauthorized access (status code 401)
+     */
+    @Operation(
+        operationId = "petGetProfileGet",
+        summary = "Retrieve pet profile information",
+        description = "Fetches the pet profile details.",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Profile details retrieved successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PetAddProfilePostRequest.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pet/get-profile",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<PetAddProfilePostRequest> petGetProfileGet(
+        
+    );
+
+
+    /**
+     * PUT /pet/update-profile : Update pet profile
+     *
+     * @param petUpdateProfilePutRequest  (required)
+     * @return Pet profile updated successfully (status code 200)
+     */
+    @Operation(
+        operationId = "petUpdateProfilePut",
+        summary = "Update pet profile",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Pet profile updated successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/pet/update-info",
+        value = "/pet/update-profile",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    ResponseEntity<ModelApiResponse> petUpdateInfoPut(
-        @Parameter(name = "PetUpdateInfoPutRequest", description = "", required = true) @Valid @RequestBody PetUpdateInfoPutRequest petUpdateInfoPutRequest
+    ResponseEntity<SuccessApiResponse> petUpdateProfilePut(
+        @Parameter(name = "PetUpdateProfilePutRequest", description = "", required = true) @Valid @RequestBody PetUpdateProfilePutRequest petUpdateProfilePutRequest
+    );
+
+
+    /**
+     * POST /pet/upload-image : Upload an image for a pet
+     * Uploads an image file for a specific pet.
+     *
+     * @param petId  (required)
+     * @param image  (required)
+     * @return Image uploaded successfully (status code 200)
+     *         or Invalid request or missing parameters (status code 400)
+     */
+    @Operation(
+        operationId = "petUploadImagePost",
+        summary = "Upload an image for a pet",
+        description = "Uploads an image file for a specific pet.",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Image uploaded successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid request or missing parameters", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/pet/upload-image",
+        produces = { "application/json" },
+        consumes = { "multipart/form-data" }
+    )
+    
+    ResponseEntity<SuccessApiResponse> petUploadImagePost(
+        @Parameter(name = "petId", description = "", required = true) @Valid @RequestParam(value = "petId", required = true) Integer petId,
+        @Parameter(name = "image", description = "", required = true) @RequestPart(value = "image", required = true) MultipartFile image
     );
 
 }
