@@ -8,6 +8,7 @@ import com.prj666.group1.petadoptionsystem.model.User;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
 import com.prj666.group1.petadoptionsystem.service.ImageService;
 import com.prj666.group1.petadoptionsystem.service.UserService;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class UserApiController implements UserApi {
@@ -34,16 +36,18 @@ public class UserApiController implements UserApi {
 
     @Override
     public ResponseEntity<UserLoginPost200Response> userLoginPost(UserLoginPostRequest userLoginPostRequest) {
-        Optional<User> user = userService.login(userLoginPostRequest.getEmail(), userLoginPostRequest.getPassword());
+        Optional<User> userOptional = userService.login(userLoginPostRequest.getEmail(), userLoginPostRequest.getPassword());
 
         UserLoginPost200Response resp = new UserLoginPost200Response();
 
-        if (user.isPresent()) {
+        if (userOptional.isPresent()) {
             // Successful login
+            User user = userOptional.get();
             return ResponseEntity.ok(resp.success(true)
                     .message("Login successful")
-                    .role(user.get().getAccountType().getValue())
-                    .token(user.get().getToken()));
+                    .role(user.getAccountType())
+                    .profileSet(user.isProfileSet())
+                    .token(user.getToken()));
         } else {
             // Failed login
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -62,8 +66,9 @@ public class UserApiController implements UserApi {
         // Create and save a new user
         User newUser = new User();
         newUser.setEmail(userRegisterPostRequest.getEmail());
-        newUser.setPassword(userRegisterPostRequest.getPassword());
+        newUser.setRawPassword(userRegisterPostRequest.getPassword());
         newUser.setAccountType(userRegisterPostRequest.getRole());
+        newUser.setProfileSet(false);
         userService.saveUser(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -80,9 +85,10 @@ public class UserApiController implements UserApi {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new SuccessApiResponse().success(false).message(e.getMessage()));
         }
-
+        user.setName(userUpdateProfilePutRequest.getName());
         user.setAddress(userUpdateProfilePutRequest.getAddress());
         user.setPhone(userUpdateProfilePutRequest.getPhone());
+        user.setProfileSet(true);
         userService.saveUser(user);
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -99,46 +105,53 @@ public class UserApiController implements UserApi {
                     .body(new SuccessApiResponse().success(false).message("User not found"));
         }
 
+        if(user.getAccountType() != Role.ADOPTER){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new SuccessApiResponse().success(false).message("User is not an adopter"));
+        }
+
         ArrayList<String> errors = new ArrayList<>();
 
-        List<Attribute> preferences = requestBody.entrySet().stream().map(a -> {
+        List<Attribute> preferences = requestBody.entrySet().stream().flatMap(a -> {
                     Optional<AttributeGroup> attributeGroup = attributeService.getAttributeGroupByName(a.getKey());
                     if(attributeGroup.isEmpty()) {
                         errors.add("Unknown attribute group: " + a.getKey());
-                        return Collections.<Attribute>emptyList();
+                        return Stream.empty();
                     }
                     AttributeGroup group = attributeGroup.get();
                     List<String> values = a.getValue();
-                    if(values == null || values.size() > 1 && !group.isMultivalued()){
-                        errors.add("Wrong attribute group value: " +
+                    if(values == null || values.isEmpty()){
+                        return Stream.empty();
+                    }
+                    if(values.size() > 1 && !group.isMultivalued()){
+                        errors.add("Can't have more than one value for this attribute group: " +
                                 a.getKey() + " : " + values);
-                        return Collections.<Attribute>emptyList();
+                        return Stream.empty();
                     }
 
                     Map<String, Attribute> attributes = attributeService.getAttributesByGroup(group.getId())
                             .stream().collect(Collectors.toMap(Attribute::getName, attr -> attr));
 
                     Map<String, Attribute> selectedAttributes = values.stream()
-                            .collect(Collectors.toMap(attrName -> attrName, attributes::get));
-                    List<String> badAttributes = selectedAttributes.entrySet().stream()
-                            .filter(e -> e.getValue() == null)
-                            .map(Map.Entry::getKey)
-                            .toList();
-                    if(!badAttributes.isEmpty()){
-                        errors.add("Unrecognized attribute group values: " +
-                                a.getKey() + " : " + badAttributes);
-                        return Collections.<Attribute>emptyList();
-                    }
-                    return selectedAttributes.values();
-                }).filter(e -> !e.isEmpty())
-                .flatMap(Collection::stream)
-                .toList();
+                            .map(attr -> {
+                                Attribute at = attributes.get(attr);
+                                if(at == null){
+                                    errors.add("Unrecognized attribute value: " + a.getKey() + " : " + attr);
+                                }
+                                return at;
+                            })
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toMap(Attribute::getName, attr -> attr));
+                    return selectedAttributes.values().stream();
+                }).toList();
 
         if(!errors.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new SuccessApiResponse().success(false).message("Errors: " + errors));
         } else {
             userService.updateUserPreferences(user, preferences);
+            user.setProfileSet(true);
+            userService.saveUser(user);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new SuccessApiResponse().success(true).message("User preferences saved"));
         }
@@ -159,11 +172,6 @@ public class UserApiController implements UserApi {
 
     @Override
     public ResponseEntity<UserGetProfileGet200Response> userGetProfileGet() {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<com.prj666.group1.petadoptionsystem.dto.User> userAddProfilePost(com.prj666.group1.petadoptionsystem.dto.User user) {
         return null;
     }
 

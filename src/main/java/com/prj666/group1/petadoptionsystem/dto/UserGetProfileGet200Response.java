@@ -5,6 +5,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.Role;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,14 +22,14 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_get_profile_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserGetProfileGet200Response {
 
   private Integer id;
 
   private String email;
 
-  private String accountType;
+  private Role role;
 
   private String name;
 
@@ -75,24 +77,24 @@ public class UserGetProfileGet200Response {
     this.email = email;
   }
 
-  public UserGetProfileGet200Response accountType(String accountType) {
-    this.accountType = accountType;
+  public UserGetProfileGet200Response role(Role role) {
+    this.role = role;
     return this;
   }
 
   /**
-   * Get accountType
-   * @return accountType
+   * Get role
+   * @return role
    */
-  
-  @Schema(name = "accountType", example = "Pet Adopter", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("accountType")
-  public String getAccountType() {
-    return accountType;
+  @Valid 
+  @Schema(name = "role", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("role")
+  public Role getRole() {
+    return role;
   }
 
-  public void setAccountType(String accountType) {
-    this.accountType = accountType;
+  public void setRole(Role role) {
+    this.role = role;
   }
 
   public UserGetProfileGet200Response name(String name) {
@@ -166,7 +168,7 @@ public class UserGetProfileGet200Response {
     UserGetProfileGet200Response userGetProfileGet200Response = (UserGetProfileGet200Response) o;
     return Objects.equals(this.id, userGetProfileGet200Response.id) &&
         Objects.equals(this.email, userGetProfileGet200Response.email) &&
-        Objects.equals(this.accountType, userGetProfileGet200Response.accountType) &&
+        Objects.equals(this.role, userGetProfileGet200Response.role) &&
         Objects.equals(this.name, userGetProfileGet200Response.name) &&
         Objects.equals(this.phone, userGetProfileGet200Response.phone) &&
         Objects.equals(this.address, userGetProfileGet200Response.address);
@@ -174,7 +176,7 @@ public class UserGetProfileGet200Response {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, accountType, name, phone, address);
+    return Objects.hash(id, email, role, name, phone, address);
   }
 
   @Override
@@ -183,7 +185,7 @@ public class UserGetProfileGet200Response {
     sb.append("class UserGetProfileGet200Response {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
-    sb.append("    accountType: ").append(toIndentedString(accountType)).append("\n");
+    sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");

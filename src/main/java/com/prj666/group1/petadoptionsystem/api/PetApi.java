@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "pet", description = "Operations about Pets")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
@@ -56,19 +56,17 @@ public interface PetApi {
         tags = { "pet" },
         responses = {
             @ApiResponse(responseCode = "201", description = "Pet added successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SuccessApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
             }),
             @ApiResponse(responseCode = "405", description = "Invalid input", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = FailureApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
         value = "/pet/add-profile",
-        produces = { "application/json", "application/xml" },
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
     

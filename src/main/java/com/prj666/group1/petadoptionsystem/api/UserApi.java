@@ -8,7 +8,6 @@ package com.prj666.group1.petadoptionsystem.api;
 import com.prj666.group1.petadoptionsystem.dto.FailureApiResponse;
 import java.util.Map;
 import com.prj666.group1.petadoptionsystem.dto.SuccessApiResponse;
-import com.prj666.group1.petadoptionsystem.dto.User;
 import com.prj666.group1.petadoptionsystem.dto.UserGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPost200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPostRequest;
@@ -40,42 +39,11 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "user", description = "Operations about Users (Both Adopters and Shelters)")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
 public interface UserApi {
-
-    /**
-     * POST /user/add-profile : Add a user profile
-     * This can only be done by the logged in user.
-     *
-     * @param user Created user object (optional)
-     * @return Successful operation (status code 200)
-     */
-    @Operation(
-        operationId = "userAddProfilePost",
-        summary = "Add a user profile",
-        description = "This can only be done by the logged in user.",
-        tags = { "user" },
-        responses = {
-            @ApiResponse(responseCode = "default", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/user/add-profile",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
-    )
-    
-    ResponseEntity<User> userAddProfilePost(
-        @Parameter(name = "User", description = "Created user object") @Valid @RequestBody(required = false) User user
-    );
-
 
     /**
      * DELETE /user/delete-profile/{email} : Delete a user profile
@@ -95,18 +63,15 @@ public interface UserApi {
         tags = { "user" },
         responses = {
             @ApiResponse(responseCode = "204", description = "User profile successfully deleted.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SuccessApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid username supplied", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = FailureApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Unauthorized access."),
             @ApiResponse(responseCode = "403", description = "Forbidden. User does not have permission to delete this profile"),
             @ApiResponse(responseCode = "404", description = "User not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = FailureApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
             })
         },
         security = {
@@ -116,7 +81,7 @@ public interface UserApi {
     @RequestMapping(
         method = RequestMethod.DELETE,
         value = "/user/delete-profile/{email}",
-        produces = { "application/json", "application/xml" }
+        produces = { "application/json" }
     )
     
     ResponseEntity<SuccessApiResponse> userDeleteProfileEmailDelete(
@@ -266,15 +231,17 @@ public interface UserApi {
         tags = { "user" },
         responses = {
             @ApiResponse(responseCode = "200", description = "User contacts updated successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SuccessApiResponse.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.PUT,
         value = "/user/update-profile",
-        produces = { "application/json", "application/xml" },
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
     

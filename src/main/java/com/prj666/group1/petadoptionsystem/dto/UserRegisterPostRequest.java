@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.Role;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -21,49 +22,14 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_register_post_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserRegisterPostRequest {
 
   private String email;
 
   private String password;
 
-  /**
-   * Gets or Sets role
-   */
-  public enum RoleEnum {
-    ADOPTER("Pet Adopter"),
-    
-    SHELTER("Pet Shelter");
-
-    private String value;
-
-    RoleEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static RoleEnum fromValue(String value) {
-      for (RoleEnum b : RoleEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private RoleEnum role;
+  private Role role;
 
   public UserRegisterPostRequest email(String email) {
     this.email = email;
@@ -105,7 +71,7 @@ public class UserRegisterPostRequest {
     this.password = password;
   }
 
-  public UserRegisterPostRequest role(RoleEnum role) {
+  public UserRegisterPostRequest role(Role role) {
     this.role = role;
     return this;
   }
@@ -114,14 +80,14 @@ public class UserRegisterPostRequest {
    * Get role
    * @return role
    */
-  
-  @Schema(name = "role", example = "Pet Adopter", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Valid 
+  @Schema(name = "role", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("role")
-  public RoleEnum getRole() {
+  public Role getRole() {
     return role;
   }
 
-  public void setRole(RoleEnum role) {
+  public void setRole(Role role) {
     this.role = role;
   }
 

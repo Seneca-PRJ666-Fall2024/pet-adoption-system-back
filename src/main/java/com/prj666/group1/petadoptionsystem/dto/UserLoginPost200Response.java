@@ -5,6 +5,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.Role;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,14 +22,16 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_login_post_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-28T13:05:45.967077-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserLoginPost200Response {
 
   private Boolean success;
 
   private String message;
 
-  private String role;
+  private Role role;
+
+  private Boolean profileSet;
 
   private String token;
 
@@ -71,7 +75,7 @@ public class UserLoginPost200Response {
     this.message = message;
   }
 
-  public UserLoginPost200Response role(String role) {
+  public UserLoginPost200Response role(Role role) {
     this.role = role;
     return this;
   }
@@ -80,15 +84,35 @@ public class UserLoginPost200Response {
    * Get role
    * @return role
    */
-  
-  @Schema(name = "role", example = "Pet Adopter", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Valid 
+  @Schema(name = "role", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("role")
-  public String getRole() {
+  public Role getRole() {
     return role;
   }
 
-  public void setRole(String role) {
+  public void setRole(Role role) {
     this.role = role;
+  }
+
+  public UserLoginPost200Response profileSet(Boolean profileSet) {
+    this.profileSet = profileSet;
+    return this;
+  }
+
+  /**
+   * Get profileSet
+   * @return profileSet
+   */
+  
+  @Schema(name = "profileSet", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("profileSet")
+  public Boolean getProfileSet() {
+    return profileSet;
+  }
+
+  public void setProfileSet(Boolean profileSet) {
+    this.profileSet = profileSet;
   }
 
   public UserLoginPost200Response token(String token) {
@@ -123,12 +147,13 @@ public class UserLoginPost200Response {
     return Objects.equals(this.success, userLoginPost200Response.success) &&
         Objects.equals(this.message, userLoginPost200Response.message) &&
         Objects.equals(this.role, userLoginPost200Response.role) &&
+        Objects.equals(this.profileSet, userLoginPost200Response.profileSet) &&
         Objects.equals(this.token, userLoginPost200Response.token);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(success, message, role, token);
+    return Objects.hash(success, message, role, profileSet, token);
   }
 
   @Override
@@ -138,6 +163,7 @@ public class UserLoginPost200Response {
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
+    sb.append("    profileSet: ").append(toIndentedString(profileSet)).append("\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");
     sb.append("}");
     return sb.toString();

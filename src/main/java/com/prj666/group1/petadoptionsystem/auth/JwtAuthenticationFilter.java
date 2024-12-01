@@ -1,6 +1,7 @@
 package com.prj666.group1.petadoptionsystem.auth;
 
 import com.prj666.group1.petadoptionsystem.model.User;
+import com.prj666.group1.petadoptionsystem.repository.UserRepository;
 import com.prj666.group1.petadoptionsystem.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -22,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
 
     @Override
@@ -36,11 +38,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (jwtTokenProvider.validateToken(token)) {
                 String username = jwtTokenProvider.getUsernameFromToken(token);
-                User userDetails = userService.getByEmail(username);
+                Optional<User> userDetails = userRepository.findByEmail(username);
 
-                if(token.equals(userDetails.getToken())) {
+                if(userDetails.isPresent() && token.equals(userDetails.get().getToken())) {
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, List.of());
+                            new UsernamePasswordAuthenticationToken(userDetails.get(), null, List.of());
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
