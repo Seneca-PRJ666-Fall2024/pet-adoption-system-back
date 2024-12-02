@@ -197,6 +197,26 @@ public class UserApiController implements UserApi {
 
     @Override
     public ResponseEntity<UserGetProfileGet200Response> userGetProfileGet() {
-        return null;
+        User user;
+        try {
+            user = userService.getUserFromContext();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new UserGetProfileGet200Response().success(false).message(e.getMessage()));
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new UserGetProfileGet200Response()
+                        .success(true)
+                        .message("User profile retrieved")
+                        .payload(new UserGetProfileGet200ResponseAllOfPayload()
+                                .id(user.getId())
+                                .name(user.getName())
+                                .address(user.getAddress())
+                                .phone(user.getPhone())
+                                .role(user.getAccountType())
+                                .email(user.getEmail())
+                                .imageUrl(user.getImageUrl())
+                        )
+                );
     }
 }
