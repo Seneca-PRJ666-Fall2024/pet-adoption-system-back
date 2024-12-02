@@ -2,6 +2,7 @@ package com.prj666.group1.petadoptionsystem.config;
 
 import com.prj666.group1.petadoptionsystem.auth.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,12 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Value("${openapi.petAdoptionSystem.base-path:}")
+    private String basePath;
+
+    @Value("${openapi.image-base-path}")
+    private String imageBasePath;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -36,7 +43,12 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v4/adoption/story", "/api/v4/user/login", "/api/v4/user/register").permitAll() // Public endpoints
+                        .requestMatchers(
+                                basePath +"/adoption/story",
+                                basePath+ "/user/login",
+                                basePath + "/user/register",
+                                imageBasePath + "/**"
+                        ).permitAll() // Public endpoints
                         .anyRequest().authenticated() // All other endpoints require authentication
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter

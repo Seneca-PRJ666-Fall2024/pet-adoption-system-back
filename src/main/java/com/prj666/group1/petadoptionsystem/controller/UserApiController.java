@@ -10,6 +10,7 @@ import com.prj666.group1.petadoptionsystem.service.ImageService;
 import com.prj666.group1.petadoptionsystem.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -34,6 +35,9 @@ public class UserApiController implements UserApi {
     @Autowired
     private ImageService imageService;
 
+    @Value("${openapi.image-base-path}")
+    private String imageBasePath;
+
     @Override
     public ResponseEntity<UserLoginPost200Response> userLoginPost(UserLoginPostRequest userLoginPostRequest) {
         Optional<User> userOptional = userService.login(userLoginPostRequest.getEmail(), userLoginPostRequest.getPassword());
@@ -45,9 +49,12 @@ public class UserApiController implements UserApi {
             User user = userOptional.get();
             return ResponseEntity.ok(resp.success(true)
                     .message("Login successful")
-                    .role(user.getAccountType())
-                    .profileSet(user.isProfileSet())
-                    .token(user.getToken()));
+                            .payload(new UserLoginPost200ResponseAllOfPayload()
+                                    .role(user.getAccountType())
+                                    .profileSet(user.isProfileSet())
+                                    .token(user.getToken())
+                            )
+            );
         } else {
             // Failed login
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -56,11 +63,11 @@ public class UserApiController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<SuccessApiResponse> userRegisterPost(UserRegisterPostRequest userRegisterPostRequest) {
+    public ResponseEntity<ModelApiResponse> userRegisterPost(UserRegisterPostRequest userRegisterPostRequest) {
         // Check if the username already exists
         if (userService.existsByEmail(userRegisterPostRequest.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new SuccessApiResponse().success(false).message("Username is already taken"));
+                    .body(new ModelApiResponse().success(false).message("Username is already taken"));
         }
 
         // Create and save a new user
@@ -72,42 +79,51 @@ public class UserApiController implements UserApi {
         userService.saveUser(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new SuccessApiResponse().success(true).message("User registered successfully"));
+                .body(new ModelApiResponse().success(true).message("User registered successfully"));
     }
 
     @Override
-    public ResponseEntity<SuccessApiResponse> userUpdateProfilePut(UserUpdateProfilePutRequest userUpdateProfilePutRequest) {
+    public ResponseEntity<ModelApiResponse> userUpdateProfilePut(UserUpdateProfilePutRequest userUpdateProfilePutRequest) {
 
         User user;
         try {
             user = userService.getUserFromContext();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new SuccessApiResponse().success(false).message(e.getMessage()));
+                    .body(new ModelApiResponse().success(false).message(e.getMessage()));
         }
-        user.setName(userUpdateProfilePutRequest.getName());
-        user.setAddress(userUpdateProfilePutRequest.getAddress());
-        user.setPhone(userUpdateProfilePutRequest.getPhone());
+        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getImageUrl())){
+            user.setImageUrl(userUpdateProfilePutRequest.getImageUrl());
+        }
+        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getName())){
+            user.setName(userUpdateProfilePutRequest.getName());
+        }
+        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getAddress())){
+            user.setAddress(userUpdateProfilePutRequest.getAddress());
+        }
+        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getPhone())){
+            user.setPhone(userUpdateProfilePutRequest.getPhone());
+        }
         user.setProfileSet(true);
         userService.saveUser(user);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new SuccessApiResponse().success(true).message("User updated successfully"));
+                .body(new ModelApiResponse().success(true).message("User updated successfully"));
     }
 
 
     @Override
-    public ResponseEntity<SuccessApiResponse> userPreferencesPost(Map<String, List<String>> requestBody) {
+    public ResponseEntity<ModelApiResponse> userPreferencesPost(Map<String, List<String>> requestBody) {
         User user = userService.getUserFromContext();
 
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new SuccessApiResponse().success(false).message("User not found"));
+                    .body(new ModelApiResponse().success(false).message("User not found"));
         }
 
         if(user.getAccountType() != Role.ADOPTER){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new SuccessApiResponse().success(false).message("User is not an adopter"));
+                    .body(new ModelApiResponse().success(false).message("User is not an adopter"));
         }
 
         ArrayList<String> errors = new ArrayList<>();
@@ -147,36 +163,40 @@ public class UserApiController implements UserApi {
 
         if(!errors.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new SuccessApiResponse().success(false).message("Errors: " + errors));
+                    .body(new ModelApiResponse().success(false).message("Errors: " + errors));
         } else {
             userService.updateUserPreferences(user, preferences);
             user.setProfileSet(true);
             userService.saveUser(user);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new SuccessApiResponse().success(true).message("User preferences saved"));
+                    .body(new ModelApiResponse().success(true).message("User preferences saved"));
         }
     }
 
     @Override
-    public ResponseEntity<SuccessApiResponse> userUploadImagePost(MultipartFile image) {
+    public ResponseEntity<UserUploadImagePost200Response> userUploadImagePost(MultipartFile image) {
         try {
             String filename = imageService.storeImage(image);
-            String fileDownloadUri = "/images/" + filename;
+            String fileDownloadUri = imageBasePath+ "/" + filename;
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new SuccessApiResponse().success(true).message("Image uploaded successfully: " + fileDownloadUri));
+                    .body(new UserUploadImagePost200Response()
+                            .success(true)
+                            .message("Image uploaded successfully")
+                            .payload(fileDownloadUri)
+                    );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new SuccessApiResponse().success(false).message("Could not upload the image: " + e.getMessage()));
+                    .body(new UserUploadImagePost200Response().success(false).message("Could not upload the image: " + e.getMessage()));
         }
     }
 
     @Override
-    public ResponseEntity<UserGetProfileGet200Response> userGetProfileGet() {
+    public ResponseEntity<ModelApiResponse> userDeleteProfileIdDelete(String id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<SuccessApiResponse> userDeleteProfileEmailDelete(String email) {
+    public ResponseEntity<UserGetProfileGet200Response> userGetProfileGet() {
         return null;
     }
 }

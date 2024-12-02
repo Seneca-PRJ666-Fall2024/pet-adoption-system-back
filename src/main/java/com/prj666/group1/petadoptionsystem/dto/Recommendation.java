@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.RecommendationStatus;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -20,19 +22,19 @@ import jakarta.annotation.Generated;
  * Recommendation
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Recommendation {
 
-  private Integer id;
+  private String id;
 
-  private Integer petId;
+  private String petId;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
 
-  private Integer status;
+  private RecommendationStatus status;
 
-  public Recommendation id(Integer id) {
+  public Recommendation id(String id) {
     this.id = id;
     return this;
   }
@@ -42,17 +44,17 @@ public class Recommendation {
    * @return id
    */
   
-  @Schema(name = "id", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "id", example = "adf12eafd770...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
-  public Integer getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(String id) {
     this.id = id;
   }
 
-  public Recommendation petId(Integer petId) {
+  public Recommendation petId(String petId) {
     this.petId = petId;
     return this;
   }
@@ -62,13 +64,13 @@ public class Recommendation {
    * @return petId
    */
   
-  @Schema(name = "pet_id", example = "42", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("pet_id")
-  public Integer getPetId() {
+  @Schema(name = "petId", example = "adf12eafd770...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("petId")
+  public String getPetId() {
     return petId;
   }
 
-  public void setPetId(Integer petId) {
+  public void setPetId(String petId) {
     this.petId = petId;
   }
 
@@ -92,7 +94,7 @@ public class Recommendation {
     this.date = date;
   }
 
-  public Recommendation status(Integer status) {
+  public Recommendation status(RecommendationStatus status) {
     this.status = status;
     return this;
   }
@@ -101,14 +103,14 @@ public class Recommendation {
    * Get status
    * @return status
    */
-  
-  @Schema(name = "status", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Valid 
+  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public Integer getStatus() {
+  public RecommendationStatus getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(RecommendationStatus status) {
     this.status = status;
   }
 

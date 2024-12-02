@@ -5,6 +5,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.Role;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -16,12 +18,18 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * UserUpdateProfilePutRequest
+ * UserGetProfileGet200ResponseAllOfPayload
  */
 
-@JsonTypeName("_user_update_profile_put_request")
+@JsonTypeName("_user_get_profile_get_200_response_allOf_payload")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class UserUpdateProfilePutRequest {
+public class UserGetProfileGet200ResponseAllOfPayload {
+
+  private String id;
+
+  private String email;
+
+  private Role role;
 
   private String name;
 
@@ -31,7 +39,67 @@ public class UserUpdateProfilePutRequest {
 
   private String imageUrl;
 
-  public UserUpdateProfilePutRequest name(String name) {
+  public UserGetProfileGet200ResponseAllOfPayload id(String id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+   */
+  
+  @Schema(name = "id", example = "12ad3fa...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public UserGetProfileGet200ResponseAllOfPayload email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+   */
+  
+  @Schema(name = "email", example = "user@example.com", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("email")
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public UserGetProfileGet200ResponseAllOfPayload role(Role role) {
+    this.role = role;
+    return this;
+  }
+
+  /**
+   * Get role
+   * @return role
+   */
+  @Valid 
+  @Schema(name = "role", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("role")
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public UserGetProfileGet200ResponseAllOfPayload name(String name) {
     this.name = name;
     return this;
   }
@@ -51,7 +119,7 @@ public class UserUpdateProfilePutRequest {
     this.name = name;
   }
 
-  public UserUpdateProfilePutRequest phone(String phone) {
+  public UserGetProfileGet200ResponseAllOfPayload phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -71,7 +139,7 @@ public class UserUpdateProfilePutRequest {
     this.phone = phone;
   }
 
-  public UserUpdateProfilePutRequest address(String address) {
+  public UserGetProfileGet200ResponseAllOfPayload address(String address) {
     this.address = address;
     return this;
   }
@@ -91,7 +159,7 @@ public class UserUpdateProfilePutRequest {
     this.address = address;
   }
 
-  public UserUpdateProfilePutRequest imageUrl(String imageUrl) {
+  public UserGetProfileGet200ResponseAllOfPayload imageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
     return this;
   }
@@ -101,7 +169,7 @@ public class UserUpdateProfilePutRequest {
    * @return imageUrl
    */
   
-  @Schema(name = "imageUrl", example = "http://some.site/images/image.jpg", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "imageUrl", example = "http://some.site/images/img.jpg", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("imageUrl")
   public String getImageUrl() {
     return imageUrl;
@@ -119,22 +187,28 @@ public class UserUpdateProfilePutRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserUpdateProfilePutRequest userUpdateProfilePutRequest = (UserUpdateProfilePutRequest) o;
-    return Objects.equals(this.name, userUpdateProfilePutRequest.name) &&
-        Objects.equals(this.phone, userUpdateProfilePutRequest.phone) &&
-        Objects.equals(this.address, userUpdateProfilePutRequest.address) &&
-        Objects.equals(this.imageUrl, userUpdateProfilePutRequest.imageUrl);
+    UserGetProfileGet200ResponseAllOfPayload userGetProfileGet200ResponseAllOfPayload = (UserGetProfileGet200ResponseAllOfPayload) o;
+    return Objects.equals(this.id, userGetProfileGet200ResponseAllOfPayload.id) &&
+        Objects.equals(this.email, userGetProfileGet200ResponseAllOfPayload.email) &&
+        Objects.equals(this.role, userGetProfileGet200ResponseAllOfPayload.role) &&
+        Objects.equals(this.name, userGetProfileGet200ResponseAllOfPayload.name) &&
+        Objects.equals(this.phone, userGetProfileGet200ResponseAllOfPayload.phone) &&
+        Objects.equals(this.address, userGetProfileGet200ResponseAllOfPayload.address) &&
+        Objects.equals(this.imageUrl, userGetProfileGet200ResponseAllOfPayload.imageUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, phone, address, imageUrl);
+    return Objects.hash(id, email, role, name, phone, address, imageUrl);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserUpdateProfilePutRequest {\n");
+    sb.append("class UserGetProfileGet200ResponseAllOfPayload {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");

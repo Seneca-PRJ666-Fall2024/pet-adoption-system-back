@@ -1,24 +1,19 @@
 package com.prj666.group1.petadoptionsystem.model;
 
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStatus;
 import com.prj666.group1.petadoptionsystem.dto.RecommendationStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-@Document(collection = "Recommendation")
-public class Recommendation {
+@Document(collection = "Adoption")
+public class Adoption {
 
     @Id
     private String id;
-
-    @Indexed
-    private String recommendationListId;
 
     @Indexed
     private String petId;
@@ -29,13 +24,12 @@ public class Recommendation {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
-    private RecommendationStatus status;
+    private AdoptionStatus status;
 
     // Constructors
-    public Recommendation() {}
+    public Adoption() {}
 
-    public Recommendation(String recommendationListId, String petId, String userId, LocalDate date, RecommendationStatus status) {
-        this.recommendationListId = recommendationListId;
+    public Adoption(String petId, String userId, LocalDate date, AdoptionStatus status) {
         this.petId = petId;
         this.date = date;
         this.status = status;
@@ -46,14 +40,6 @@ public class Recommendation {
 
     public String getId() {
         return id;
-    }
-
-    public String getRecommendationListId() {
-        return recommendationListId;
-    }
-
-    public void setRecommendationListId(String recommendationListId) {
-        this.recommendationListId = recommendationListId;
     }
 
     public String getPetId() {
@@ -72,11 +58,11 @@ public class Recommendation {
         this.date = date;
     }
 
-    public RecommendationStatus getStatus() {
+    public AdoptionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(RecommendationStatus status) {
+    public void setStatus(AdoptionStatus status) {
         this.status = status;
     }
 

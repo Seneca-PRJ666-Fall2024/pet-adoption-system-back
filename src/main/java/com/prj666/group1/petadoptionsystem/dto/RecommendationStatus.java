@@ -17,19 +17,21 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets Role
+ * Gets or Sets RecommendationStatus
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public enum Role {
+public enum RecommendationStatus {
   
-  ADOPTER("adopter"),
+  NEW("new"),
   
-  SHELTER("shelter");
+  ACCEPTED("accepted"),
+  
+  REJECTED("rejected");
 
   private String value;
 
-  Role(String value) {
+  RecommendationStatus(String value) {
     this.value = value;
   }
 
@@ -44,8 +46,8 @@ public enum Role {
   }
 
   @JsonCreator
-  public static Role fromValue(String value) {
-    for (Role b : Role.values()) {
+  public static RecommendationStatus fromValue(String value) {
+    for (RecommendationStatus b : RecommendationStatus.values()) {
       if (b.value.equals(value)) {
         return b;
       }

@@ -4,6 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.prj666.group1.petadoptionsystem.dto.Recommendation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -15,17 +20,21 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * SuccessApiResponse
+ * MatchingRecommendationsGet200Response
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class SuccessApiResponse {
+@JsonTypeName("_matching_recommendations_get_200_response")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class MatchingRecommendationsGet200Response {
 
   private Boolean success;
 
   private String message;
 
-  public SuccessApiResponse success(Boolean success) {
+  @Valid
+  private List<@Valid Recommendation> payload = new ArrayList<>();
+
+  public MatchingRecommendationsGet200Response success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -45,7 +54,7 @@ public class SuccessApiResponse {
     this.success = success;
   }
 
-  public SuccessApiResponse message(String message) {
+  public MatchingRecommendationsGet200Response message(String message) {
     this.message = message;
     return this;
   }
@@ -65,6 +74,34 @@ public class SuccessApiResponse {
     this.message = message;
   }
 
+  public MatchingRecommendationsGet200Response payload(List<@Valid Recommendation> payload) {
+    this.payload = payload;
+    return this;
+  }
+
+  public MatchingRecommendationsGet200Response addPayloadItem(Recommendation payloadItem) {
+    if (this.payload == null) {
+      this.payload = new ArrayList<>();
+    }
+    this.payload.add(payloadItem);
+    return this;
+  }
+
+  /**
+   * Get payload
+   * @return payload
+   */
+  @Valid 
+  @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("payload")
+  public List<@Valid Recommendation> getPayload() {
+    return payload;
+  }
+
+  public void setPayload(List<@Valid Recommendation> payload) {
+    this.payload = payload;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -73,22 +110,24 @@ public class SuccessApiResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SuccessApiResponse successApiResponse = (SuccessApiResponse) o;
-    return Objects.equals(this.success, successApiResponse.success) &&
-        Objects.equals(this.message, successApiResponse.message);
+    MatchingRecommendationsGet200Response matchingRecommendationsGet200Response = (MatchingRecommendationsGet200Response) o;
+    return Objects.equals(this.success, matchingRecommendationsGet200Response.success) &&
+        Objects.equals(this.message, matchingRecommendationsGet200Response.message) &&
+        Objects.equals(this.payload, matchingRecommendationsGet200Response.payload);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(success, message);
+    return Objects.hash(success, message, payload);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SuccessApiResponse {\n");
+    sb.append("class MatchingRecommendationsGet200Response {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    payload: ").append(toIndentedString(payload)).append("\n");
     sb.append("}");
     return sb.toString();
   }

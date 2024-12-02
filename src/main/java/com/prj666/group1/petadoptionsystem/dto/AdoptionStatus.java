@@ -17,19 +17,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets Role
+ * Gets or Sets AdoptionStatus
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public enum Role {
+public enum AdoptionStatus {
   
-  ADOPTER("adopter"),
+  NEW("new"),
   
-  SHELTER("shelter");
+  PENDING("pending"),
+  
+  APPROVED("approved"),
+  
+  REJECTED("rejected");
 
   private String value;
 
-  Role(String value) {
+  AdoptionStatus(String value) {
     this.value = value;
   }
 
@@ -44,8 +48,8 @@ public enum Role {
   }
 
   @JsonCreator
-  public static Role fromValue(String value) {
-    for (Role b : Role.values()) {
+  public static AdoptionStatus fromValue(String value) {
+    for (AdoptionStatus b : AdoptionStatus.values()) {
       if (b.value.equals(value)) {
         return b;
       }

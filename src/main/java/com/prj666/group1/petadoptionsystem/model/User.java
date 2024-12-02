@@ -1,7 +1,6 @@
 package com.prj666.group1.petadoptionsystem.model;
 
 import com.prj666.group1.petadoptionsystem.dto.Role;
-import com.prj666.group1.petadoptionsystem.dto.UserRegisterPostRequest;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +18,9 @@ public class User {
     private String name;
     private String address;
     private String phone;
+    private String imageUrl;
     private boolean profileSet;
+    private String recommendationList;
 
     public String getId() {
         return id;
@@ -99,5 +100,21 @@ public class User {
 
     public void setRawPassword(String rawPassword) {
         this.rawPassword = rawPassword;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getRecommendationList() {
+        return recommendationList;
+    }
+
+    public void setRecommendationList(String recommendationList) {
+        this.recommendationList = recommendationList;
     }
 }

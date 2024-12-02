@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStatus;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -19,60 +20,23 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * AdoptionStatusGet200ResponseInner
+ * AdoptionStatusGet200ResponseAllOfPayloadInner
  */
 
-@JsonTypeName("_adoption_status_get_200_response_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class AdoptionStatusGet200ResponseInner {
+@JsonTypeName("_adoption_status_get_200_response_allOf_payload_inner")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class AdoptionStatusGet200ResponseAllOfPayloadInner {
 
-  private Integer adoptionId;
+  private String adoptionId;
 
-  private Integer petId;
+  private String petId;
 
-  /**
-   * Gets or Sets status
-   */
-  public enum StatusEnum {
-    PENDING("Pending"),
-    
-    APPROVED("Approved"),
-    
-    REJECTED("Rejected");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private StatusEnum status;
+  private AdoptionStatus status;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
 
-  public AdoptionStatusGet200ResponseInner adoptionId(Integer adoptionId) {
+  public AdoptionStatusGet200ResponseAllOfPayloadInner adoptionId(String adoptionId) {
     this.adoptionId = adoptionId;
     return this;
   }
@@ -82,17 +46,17 @@ public class AdoptionStatusGet200ResponseInner {
    * @return adoptionId
    */
   
-  @Schema(name = "adoptionId", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "adoptionId", example = "adf23ee...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("adoptionId")
-  public Integer getAdoptionId() {
+  public String getAdoptionId() {
     return adoptionId;
   }
 
-  public void setAdoptionId(Integer adoptionId) {
+  public void setAdoptionId(String adoptionId) {
     this.adoptionId = adoptionId;
   }
 
-  public AdoptionStatusGet200ResponseInner petId(Integer petId) {
+  public AdoptionStatusGet200ResponseAllOfPayloadInner petId(String petId) {
     this.petId = petId;
     return this;
   }
@@ -102,17 +66,17 @@ public class AdoptionStatusGet200ResponseInner {
    * @return petId
    */
   
-  @Schema(name = "petId", example = "42", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "petId", example = "adf23ee...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("petId")
-  public Integer getPetId() {
+  public String getPetId() {
     return petId;
   }
 
-  public void setPetId(Integer petId) {
+  public void setPetId(String petId) {
     this.petId = petId;
   }
 
-  public AdoptionStatusGet200ResponseInner status(StatusEnum status) {
+  public AdoptionStatusGet200ResponseAllOfPayloadInner status(AdoptionStatus status) {
     this.status = status;
     return this;
   }
@@ -121,18 +85,18 @@ public class AdoptionStatusGet200ResponseInner {
    * Get status
    * @return status
    */
-  
-  @Schema(name = "status", example = "Pending", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Valid 
+  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public StatusEnum getStatus() {
+  public AdoptionStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(AdoptionStatus status) {
     this.status = status;
   }
 
-  public AdoptionStatusGet200ResponseInner date(LocalDate date) {
+  public AdoptionStatusGet200ResponseAllOfPayloadInner date(LocalDate date) {
     this.date = date;
     return this;
   }
@@ -160,11 +124,11 @@ public class AdoptionStatusGet200ResponseInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AdoptionStatusGet200ResponseInner adoptionStatusGet200ResponseInner = (AdoptionStatusGet200ResponseInner) o;
-    return Objects.equals(this.adoptionId, adoptionStatusGet200ResponseInner.adoptionId) &&
-        Objects.equals(this.petId, adoptionStatusGet200ResponseInner.petId) &&
-        Objects.equals(this.status, adoptionStatusGet200ResponseInner.status) &&
-        Objects.equals(this.date, adoptionStatusGet200ResponseInner.date);
+    AdoptionStatusGet200ResponseAllOfPayloadInner adoptionStatusGet200ResponseAllOfPayloadInner = (AdoptionStatusGet200ResponseAllOfPayloadInner) o;
+    return Objects.equals(this.adoptionId, adoptionStatusGet200ResponseAllOfPayloadInner.adoptionId) &&
+        Objects.equals(this.petId, adoptionStatusGet200ResponseAllOfPayloadInner.petId) &&
+        Objects.equals(this.status, adoptionStatusGet200ResponseAllOfPayloadInner.status) &&
+        Objects.equals(this.date, adoptionStatusGet200ResponseAllOfPayloadInner.date);
   }
 
   @Override
@@ -175,7 +139,7 @@ public class AdoptionStatusGet200ResponseInner {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AdoptionStatusGet200ResponseInner {\n");
+    sb.append("class AdoptionStatusGet200ResponseAllOfPayloadInner {\n");
     sb.append("    adoptionId: ").append(toIndentedString(adoptionId)).append("\n");
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

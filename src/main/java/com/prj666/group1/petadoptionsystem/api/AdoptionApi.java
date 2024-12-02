@@ -5,9 +5,9 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200ResponseInner;
-import com.prj666.group1.petadoptionsystem.dto.AdoptionStoryGet200ResponseInner;
-import com.prj666.group1.petadoptionsystem.dto.FailureApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200Response;
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStoryGet200Response;
+import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,10 +34,10 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "adoption", description = "Operations about Adoptions")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:}")
 public interface AdoptionApi {
 
     /**
@@ -45,7 +45,7 @@ public interface AdoptionApi {
      * Fetches the current status of adoptions for the authenticated adopter.
      *
      * @return Adoption status retrieved successfully (status code 200)
-     *         or Unauthorized access (status code 401)
+     *         or Generic API response (status code 401)
      */
     @Operation(
         operationId = "adoptionStatusGet",
@@ -54,11 +54,14 @@ public interface AdoptionApi {
         tags = { "adoption" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Adoption status retrieved successfully", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AdoptionStatusGet200ResponseInner.class)))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = AdoptionStatusGet200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized access", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
@@ -67,7 +70,7 @@ public interface AdoptionApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<List<AdoptionStatusGet200ResponseInner>> adoptionStatusGet(
+    ResponseEntity<AdoptionStatusGet200Response> adoptionStatusGet(
         
     );
 
@@ -86,7 +89,7 @@ public interface AdoptionApi {
         tags = { "adoption" },
         responses = {
             @ApiResponse(responseCode = "200", description = "A list of adoption stories", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AdoptionStoryGet200ResponseInner.class)))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = AdoptionStoryGet200Response.class))
             })
         }
     )
@@ -96,7 +99,7 @@ public interface AdoptionApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<List<AdoptionStoryGet200ResponseInner>> adoptionStoryGet(
+    ResponseEntity<AdoptionStoryGet200Response> adoptionStoryGet(
         @Min(1) @Parameter(name = "N", description = "The number of adoption story objects to return", in = ParameterIn.QUERY) @Valid @RequestParam(value = "N", required = false, defaultValue = "5") Integer N
     );
 

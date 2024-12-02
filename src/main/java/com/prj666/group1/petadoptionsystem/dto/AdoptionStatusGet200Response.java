@@ -5,7 +5,10 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.prj666.group1.petadoptionsystem.dto.UserLoginPost200ResponseAllOfPayload;
+import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200ResponseAllOfPayloadInner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -17,20 +20,21 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * UserLoginPost200Response
+ * AdoptionStatusGet200Response
  */
 
-@JsonTypeName("_user_login_post_200_response")
+@JsonTypeName("_adoption_status_get_200_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class UserLoginPost200Response {
+public class AdoptionStatusGet200Response {
 
   private Boolean success;
 
   private String message;
 
-  private UserLoginPost200ResponseAllOfPayload payload;
+  @Valid
+  private List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload = new ArrayList<>();
 
-  public UserLoginPost200Response success(Boolean success) {
+  public AdoptionStatusGet200Response success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -50,7 +54,7 @@ public class UserLoginPost200Response {
     this.success = success;
   }
 
-  public UserLoginPost200Response message(String message) {
+  public AdoptionStatusGet200Response message(String message) {
     this.message = message;
     return this;
   }
@@ -70,8 +74,16 @@ public class UserLoginPost200Response {
     this.message = message;
   }
 
-  public UserLoginPost200Response payload(UserLoginPost200ResponseAllOfPayload payload) {
+  public AdoptionStatusGet200Response payload(List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload) {
     this.payload = payload;
+    return this;
+  }
+
+  public AdoptionStatusGet200Response addPayloadItem(AdoptionStatusGet200ResponseAllOfPayloadInner payloadItem) {
+    if (this.payload == null) {
+      this.payload = new ArrayList<>();
+    }
+    this.payload.add(payloadItem);
     return this;
   }
 
@@ -82,11 +94,11 @@ public class UserLoginPost200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public UserLoginPost200ResponseAllOfPayload getPayload() {
+  public List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> getPayload() {
     return payload;
   }
 
-  public void setPayload(UserLoginPost200ResponseAllOfPayload payload) {
+  public void setPayload(List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload) {
     this.payload = payload;
   }
 
@@ -98,10 +110,10 @@ public class UserLoginPost200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserLoginPost200Response userLoginPost200Response = (UserLoginPost200Response) o;
-    return Objects.equals(this.success, userLoginPost200Response.success) &&
-        Objects.equals(this.message, userLoginPost200Response.message) &&
-        Objects.equals(this.payload, userLoginPost200Response.payload);
+    AdoptionStatusGet200Response adoptionStatusGet200Response = (AdoptionStatusGet200Response) o;
+    return Objects.equals(this.success, adoptionStatusGet200Response.success) &&
+        Objects.equals(this.message, adoptionStatusGet200Response.message) &&
+        Objects.equals(this.payload, adoptionStatusGet200Response.payload);
   }
 
   @Override
@@ -112,7 +124,7 @@ public class UserLoginPost200Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserLoginPost200Response {\n");
+    sb.append("class AdoptionStatusGet200Response {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    payload: ").append(toIndentedString(payload)).append("\n");

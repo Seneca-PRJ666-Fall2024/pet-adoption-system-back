@@ -20,20 +20,14 @@ import jakarta.annotation.Generated;
  * User
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class User {
 
-  private Long userId;
-
-  private Long profileId;
+  private String userId;
 
   private Role role;
 
   private String username;
-
-  private String firstName;
-
-  private String lastName;
 
   private String email;
 
@@ -51,7 +45,7 @@ public class User {
 
   private Integer userStatus;
 
-  public User userId(Long userId) {
+  public User userId(String userId) {
     this.userId = userId;
     return this;
   }
@@ -61,34 +55,14 @@ public class User {
    * @return userId
    */
   
-  @Schema(name = "userId", example = "10", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "userId", example = "0adf23ff...", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("userId")
-  public Long getUserId() {
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
-  }
-
-  public User profileId(Long profileId) {
-    this.profileId = profileId;
-    return this;
-  }
-
-  /**
-   * Get profileId
-   * @return profileId
-   */
-  
-  @Schema(name = "profileId", example = "10", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("profileId")
-  public Long getProfileId() {
-    return profileId;
-  }
-
-  public void setProfileId(Long profileId) {
-    this.profileId = profileId;
   }
 
   public User role(Role role) {
@@ -129,46 +103,6 @@ public class User {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-  public User firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
-
-  /**
-   * Get firstName
-   * @return firstName
-   */
-  
-  @Schema(name = "firstName", example = "John", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("firstName")
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public User lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
-  /**
-   * Get lastName
-   * @return lastName
-   */
-  
-  @Schema(name = "lastName", example = "James", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("lastName")
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
   }
 
   public User email(String email) {
@@ -341,11 +275,8 @@ public class User {
     }
     User user = (User) o;
     return Objects.equals(this.userId, user.userId) &&
-        Objects.equals(this.profileId, user.profileId) &&
         Objects.equals(this.role, user.role) &&
         Objects.equals(this.username, user.username) &&
-        Objects.equals(this.firstName, user.firstName) &&
-        Objects.equals(this.lastName, user.lastName) &&
         Objects.equals(this.email, user.email) &&
         Objects.equals(this.password, user.password) &&
         Objects.equals(this.phone, user.phone) &&
@@ -358,7 +289,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, profileId, role, username, firstName, lastName, email, password, phone, street, city, province, postalCode, userStatus);
+    return Objects.hash(userId, role, username, email, password, phone, street, city, province, postalCode, userStatus);
   }
 
   @Override
@@ -366,11 +297,8 @@ public class User {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
     sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-    sb.append("    profileId: ").append(toIndentedString(profileId)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-    sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");

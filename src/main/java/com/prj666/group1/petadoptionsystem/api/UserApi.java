@@ -5,14 +5,14 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.FailureApiResponse;
 import java.util.Map;
-import com.prj666.group1.petadoptionsystem.dto.SuccessApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
 import com.prj666.group1.petadoptionsystem.dto.UserGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPost200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPostRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserRegisterPostRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserUpdateProfilePutRequest;
+import com.prj666.group1.petadoptionsystem.dto.UserUploadImagePost200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,39 +39,43 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "user", description = "Operations about Users (Both Adopters and Shelters)")
-@RequestMapping("${openapi.petAdoptionSystem.base-path:/api/v4}")
+@RequestMapping("${openapi.petAdoptionSystem.base-path:}")
 public interface UserApi {
 
     /**
-     * DELETE /user/delete-profile/{email} : Delete a user profile
-     * Deletes the user profile with the specified email (username). Requires authentication and authorization.
+     * DELETE /user/delete-profile/{id} : Delete a user profile
+     * Deletes the user profile with the specified ID. Requires authentication and authorization.
      *
-     * @param email The email (username) for the profile that needs to be deleted (required)
-     * @return User profile successfully deleted. (status code 204)
-     *         or Invalid username supplied (status code 400)
-     *         or Unauthorized access. (status code 401)
-     *         or Forbidden. User does not have permission to delete this profile (status code 403)
-     *         or User not found (status code 404)
+     * @param id The userId for the profile that needs to be deleted (required)
+     * @return Generic API response (status code 204)
+     *         or Generic API response (status code 400)
+     *         or Generic API response (status code 401)
+     *         or Generic API response (status code 403)
+     *         or Generic API response (status code 404)
      */
     @Operation(
-        operationId = "userDeleteProfileEmailDelete",
+        operationId = "userDeleteProfileIdDelete",
         summary = "Delete a user profile",
-        description = "Deletes the user profile with the specified email (username). Requires authentication and authorization.",
+        description = "Deletes the user profile with the specified ID. Requires authentication and authorization.",
         tags = { "user" },
         responses = {
-            @ApiResponse(responseCode = "204", description = "User profile successfully deleted.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            @ApiResponse(responseCode = "204", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid username supplied", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "400", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized access."),
-            @ApiResponse(responseCode = "403", description = "Forbidden. User does not have permission to delete this profile"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         },
         security = {
@@ -80,12 +84,12 @@ public interface UserApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = "/user/delete-profile/{email}",
+        value = "/user/delete-profile/{id}",
         produces = { "application/json" }
     )
     
-    ResponseEntity<SuccessApiResponse> userDeleteProfileEmailDelete(
-        @Parameter(name = "email", description = "The email (username) for the profile that needs to be deleted", required = true, in = ParameterIn.PATH) @PathVariable("email") String email
+    ResponseEntity<ModelApiResponse> userDeleteProfileIdDelete(
+        @Parameter(name = "id", description = "The userId for the profile that needs to be deleted", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
     );
 
 
@@ -94,7 +98,7 @@ public interface UserApi {
      * Fetches the profile details of the currently authenticated user (adopter or shelter).
      *
      * @return Profile details retrieved successfully (status code 200)
-     *         or Unauthorized access (status code 401)
+     *         or Generic API response (status code 401)
      */
     @Operation(
         operationId = "userGetProfileGet",
@@ -105,9 +109,12 @@ public interface UserApi {
             @ApiResponse(responseCode = "200", description = "Profile details retrieved successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UserGetProfileGet200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized access", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
@@ -127,7 +134,7 @@ public interface UserApi {
      *
      * @param userLoginPostRequest  (required)
      * @return Login successful (status code 200)
-     *         or Invalid email or password (status code 401)
+     *         or Generic API response (status code 401)
      */
     @Operation(
         operationId = "userLoginPost",
@@ -138,8 +145,8 @@ public interface UserApi {
             @ApiResponse(responseCode = "200", description = "Login successful", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UserLoginPost200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Invalid email or password", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         }
     )
@@ -160,7 +167,7 @@ public interface UserApi {
      * Submit a set of preferences for different attribute groups. Each key in the JSON object represents an attribute group name, and its corresponding value is a list of selected preferences 
      *
      * @param requestBody  (required)
-     * @return Preferences added successfully (status code 201)
+     * @return Generic API response (status code 201)
      */
     @Operation(
         operationId = "userPreferencesPost",
@@ -168,9 +175,12 @@ public interface UserApi {
         description = "Submit a set of preferences for different attribute groups. Each key in the JSON object represents an attribute group name, and its corresponding value is a list of selected preferences ",
         tags = { "user" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Preferences added successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            @ApiResponse(responseCode = "201", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
@@ -180,7 +190,7 @@ public interface UserApi {
         consumes = { "application/json" }
     )
     
-    ResponseEntity<SuccessApiResponse> userPreferencesPost(
+    ResponseEntity<ModelApiResponse> userPreferencesPost(
         @Parameter(name = "request_body", description = "", required = true) @Valid @RequestBody Map<String, List<String>> requestBody
     );
 
@@ -190,8 +200,8 @@ public interface UserApi {
      * Registers a new user with an email, password, and account type (Pet Adopter or Pet Shelter).
      *
      * @param userRegisterPostRequest  (required)
-     * @return User registered successfully (status code 201)
-     *         or Email is already taken (status code 400)
+     * @return Generic API response (status code 201)
+     *         or Generic API response (status code 400)
      */
     @Operation(
         operationId = "userRegisterPost",
@@ -199,11 +209,11 @@ public interface UserApi {
         description = "Registers a new user with an email, password, and account type (Pet Adopter or Pet Shelter).",
         tags = { "user" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "User registered successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            @ApiResponse(responseCode = "201", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Email is already taken", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "400", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         }
     )
@@ -214,7 +224,7 @@ public interface UserApi {
         consumes = { "application/json" }
     )
     
-    ResponseEntity<SuccessApiResponse> userRegisterPost(
+    ResponseEntity<ModelApiResponse> userRegisterPost(
         @Parameter(name = "UserRegisterPostRequest", description = "", required = true) @Valid @RequestBody UserRegisterPostRequest userRegisterPostRequest
     );
 
@@ -223,15 +233,15 @@ public interface UserApi {
      * PUT /user/update-profile : Update a user profile
      *
      * @param userUpdateProfilePutRequest  (required)
-     * @return User contacts updated successfully (status code 200)
+     * @return Generic API response (status code 200)
      */
     @Operation(
         operationId = "userUpdateProfilePut",
         summary = "Update a user profile",
         tags = { "user" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "User contacts updated successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            @ApiResponse(responseCode = "200", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         },
         security = {
@@ -245,7 +255,7 @@ public interface UserApi {
         consumes = { "application/json" }
     )
     
-    ResponseEntity<SuccessApiResponse> userUpdateProfilePut(
+    ResponseEntity<ModelApiResponse> userUpdateProfilePut(
         @Parameter(name = "UserUpdateProfilePutRequest", description = "", required = true) @Valid @RequestBody UserUpdateProfilePutRequest userUpdateProfilePutRequest
     );
 
@@ -255,8 +265,8 @@ public interface UserApi {
      * Uploads a profile image for a user.
      *
      * @param image  (required)
-     * @return Image uploaded successfully (status code 200)
-     *         or Invalid request or missing parameters (status code 400)
+     * @return Login successful (status code 200)
+     *         or Generic API response (status code 400)
      */
     @Operation(
         operationId = "userUploadImagePost",
@@ -264,12 +274,15 @@ public interface UserApi {
         description = "Uploads a profile image for a user.",
         tags = { "user" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Image uploaded successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessApiResponse.class))
+            @ApiResponse(responseCode = "200", description = "Login successful", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UserUploadImagePost200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid request or missing parameters", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FailureApiResponse.class))
+            @ApiResponse(responseCode = "400", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
@@ -279,7 +292,7 @@ public interface UserApi {
         consumes = { "multipart/form-data" }
     )
     
-    ResponseEntity<SuccessApiResponse> userUploadImagePost(
+    ResponseEntity<UserUploadImagePost200Response> userUploadImagePost(
         @Parameter(name = "image", description = "", required = true) @RequestPart(value = "image", required = true) MultipartFile image
     );
 

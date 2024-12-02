@@ -16,12 +16,12 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * AdoptionStoryGet200ResponseInner
+ * AdoptionStoryGet200ResponseAllOfPayloadInner
  */
 
-@JsonTypeName("_adoption_story_get_200_response_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-11-30T19:00:36.896359300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class AdoptionStoryGet200ResponseInner {
+@JsonTypeName("_adoption_story_get_200_response_allOf_payload_inner")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class AdoptionStoryGet200ResponseAllOfPayloadInner {
 
   private String author;
 
@@ -29,7 +29,7 @@ public class AdoptionStoryGet200ResponseInner {
 
   private String text;
 
-  public AdoptionStoryGet200ResponseInner author(String author) {
+  public AdoptionStoryGet200ResponseAllOfPayloadInner author(String author) {
     this.author = author;
     return this;
   }
@@ -49,7 +49,7 @@ public class AdoptionStoryGet200ResponseInner {
     this.author = author;
   }
 
-  public AdoptionStoryGet200ResponseInner title(String title) {
+  public AdoptionStoryGet200ResponseAllOfPayloadInner title(String title) {
     this.title = title;
     return this;
   }
@@ -69,7 +69,7 @@ public class AdoptionStoryGet200ResponseInner {
     this.title = title;
   }
 
-  public AdoptionStoryGet200ResponseInner text(String text) {
+  public AdoptionStoryGet200ResponseAllOfPayloadInner text(String text) {
     this.text = text;
     return this;
   }
@@ -97,10 +97,10 @@ public class AdoptionStoryGet200ResponseInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AdoptionStoryGet200ResponseInner adoptionStoryGet200ResponseInner = (AdoptionStoryGet200ResponseInner) o;
-    return Objects.equals(this.author, adoptionStoryGet200ResponseInner.author) &&
-        Objects.equals(this.title, adoptionStoryGet200ResponseInner.title) &&
-        Objects.equals(this.text, adoptionStoryGet200ResponseInner.text);
+    AdoptionStoryGet200ResponseAllOfPayloadInner adoptionStoryGet200ResponseAllOfPayloadInner = (AdoptionStoryGet200ResponseAllOfPayloadInner) o;
+    return Objects.equals(this.author, adoptionStoryGet200ResponseAllOfPayloadInner.author) &&
+        Objects.equals(this.title, adoptionStoryGet200ResponseAllOfPayloadInner.title) &&
+        Objects.equals(this.text, adoptionStoryGet200ResponseAllOfPayloadInner.text);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class AdoptionStoryGet200ResponseInner {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AdoptionStoryGet200ResponseInner {\n");
+    sb.append("class AdoptionStoryGet200ResponseAllOfPayloadInner {\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    text: ").append(toIndentedString(text)).append("\n");
