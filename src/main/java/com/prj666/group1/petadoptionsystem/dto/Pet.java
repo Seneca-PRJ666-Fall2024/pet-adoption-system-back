@@ -23,14 +23,14 @@ import jakarta.annotation.Generated;
  * Pet
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Pet {
 
   private String petId;
 
   private String shelterId;
 
-  private String name;
+  private String petName;
 
   @Valid
   private List<String> images = new ArrayList<>();
@@ -78,24 +78,24 @@ public class Pet {
     this.shelterId = shelterId;
   }
 
-  public Pet name(String name) {
-    this.name = name;
+  public Pet petName(String petName) {
+    this.petName = petName;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get petName
+   * @return petName
    */
   
-  @Schema(name = "name", example = "Snooppy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @Schema(name = "petName", example = "Snooppy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("petName")
+  public String getPetName() {
+    return petName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setPetName(String petName) {
+    this.petName = petName;
   }
 
   public Pet images(List<String> images) {
@@ -165,14 +165,14 @@ public class Pet {
     Pet pet = (Pet) o;
     return Objects.equals(this.petId, pet.petId) &&
         Objects.equals(this.shelterId, pet.shelterId) &&
-        Objects.equals(this.name, pet.name) &&
+        Objects.equals(this.petName, pet.petName) &&
         Objects.equals(this.images, pet.images) &&
         Objects.equals(this.attributes, pet.attributes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(petId, shelterId, name, images, attributes);
+    return Objects.hash(petId, shelterId, petName, images, attributes);
   }
 
   @Override
@@ -181,7 +181,7 @@ public class Pet {
     sb.append("class Pet {\n");
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
     sb.append("    shelterId: ").append(toIndentedString(shelterId)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    petName: ").append(toIndentedString(petName)).append("\n");
     sb.append("    images: ").append(toIndentedString(images)).append("\n");
     sb.append("    attributes: ").append(toIndentedString(attributes)).append("\n");
     sb.append("}");

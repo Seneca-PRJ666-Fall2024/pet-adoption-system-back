@@ -2,13 +2,17 @@ package com.prj666.group1.petadoptionsystem.service;
 
 import com.prj666.group1.petadoptionsystem.model.Attribute;
 import com.prj666.group1.petadoptionsystem.model.AttributeGroup;
+import com.prj666.group1.petadoptionsystem.model.Pet;
 import com.prj666.group1.petadoptionsystem.repository.AttributeGroupRepository;
 import com.prj666.group1.petadoptionsystem.repository.AttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AttributeService {
@@ -43,6 +47,28 @@ public class AttributeService {
     // Retrieve all Attributes for an AttributeGroup
     public List<Attribute> getAttributesByGroup(String attributeGroupId) {
         return attributeRepository.findByAttributeGroupId(attributeGroupId);
+    }
+
+    public Map<String, List<String>> getPetAttributes(Pet pet){
+        if(pet.getAttributes() != null){
+            return  pet.getAttributes().stream()
+                    .map(a -> attributeRepository.findById(a))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                    .entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            a -> attributeGroupRepository.findById(a.getKey())
+                                    .map(AttributeGroup::getName).orElse("Unknown"),
+                            a -> a.getValue()
+                                    .stream()
+                                    .map(Attribute::getName)
+                                    .toList()
+                    ));
+        } else {
+            return new HashMap<>();
+        }
     }
 
 }

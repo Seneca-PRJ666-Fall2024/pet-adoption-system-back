@@ -323,21 +323,52 @@ paths:
             schema:
               type: object
               properties:
-                petId:
-                  type: string
-                  example: "12abd3...."
                 image:
                   type: string
                   format: binary
               required:
-                - petId
                 - image
       responses:
         '200':
-          description: Image uploaded successfully
-          $ref: '#/components/responses/GenericApiResponse'
+          description: Image uploaded
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: string
+                        example: /images/someImage.jpg
         '400':
           description: Invalid request or missing parameters
+          $ref: '#/components/responses/GenericApiResponse'
+
+  /pet/get-profile:
+    get:
+      tags:
+        - pet
+      summary: Retrieve all pet for the current user (shelter)
+      security:
+        - BearerAuth: [ ]
+      description: Fetches all pet profile details for the current user (shelter).
+      responses:
+        '200':
+          description: Profile details retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Pet'
+        '401':
+          description: Unauthorized access
           $ref: '#/components/responses/GenericApiResponse'
 
   /pet/get-profile/{petId}:
@@ -662,7 +693,7 @@ components:
         shelterId:
           type: string
           example: "0adf23ff..."
-        name:
+        petName:
           type: string
           example: "Snooppy"
         images:

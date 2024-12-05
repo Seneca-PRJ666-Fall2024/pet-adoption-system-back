@@ -7,8 +7,10 @@ package com.prj666.group1.petadoptionsystem.api;
 
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
 import com.prj666.group1.petadoptionsystem.dto.PetAddProfilePostRequest;
+import com.prj666.group1.petadoptionsystem.dto.PetGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.PetGetProfilePetIdGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.PetUpdateProfilePutRequest;
+import com.prj666.group1.petadoptionsystem.dto.UserUploadImagePost200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-02T01:42:56.763233900-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "pet", description = "Operations about Pets")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
@@ -127,6 +129,41 @@ public interface PetApi {
 
 
     /**
+     * GET /pet/get-profile : Retrieve all pet for the current user (shelter)
+     * Fetches all pet profile details for the current user (shelter).
+     *
+     * @return Profile details retrieved successfully (status code 200)
+     *         or Generic API response (status code 401)
+     */
+    @Operation(
+        operationId = "petGetProfileGet",
+        summary = "Retrieve all pet for the current user (shelter)",
+        description = "Fetches all pet profile details for the current user (shelter).",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Profile details retrieved successfully", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PetGetProfileGet200Response.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pet/get-profile",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<PetGetProfileGet200Response> petGetProfileGet(
+        
+    );
+
+
+    /**
      * GET /pet/get-profile/{petId} : Retrieve pet profile information
      * Fetches the pet profile details.
      *
@@ -197,9 +234,8 @@ public interface PetApi {
      * POST /pet/upload-image : Upload an image for a pet
      * Uploads an image file for a specific pet.
      *
-     * @param petId  (required)
      * @param image  (required)
-     * @return Generic API response (status code 200)
+     * @return Image uploaded (status code 200)
      *         or Generic API response (status code 400)
      */
     @Operation(
@@ -208,8 +244,8 @@ public interface PetApi {
         description = "Uploads an image file for a specific pet.",
         tags = { "pet" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Generic API response", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            @ApiResponse(responseCode = "200", description = "Image uploaded", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UserUploadImagePost200Response.class))
             }),
             @ApiResponse(responseCode = "400", description = "Generic API response", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
@@ -226,8 +262,7 @@ public interface PetApi {
         consumes = { "multipart/form-data" }
     )
     
-    ResponseEntity<ModelApiResponse> petUploadImagePost(
-        @Parameter(name = "petId", description = "", required = true) @Valid @RequestParam(value = "petId", required = true) String petId,
+    ResponseEntity<UserUploadImagePost200Response> petUploadImagePost(
         @Parameter(name = "image", description = "", required = true) @RequestPart(value = "image", required = true) MultipartFile image
     );
 
