@@ -7,11 +7,11 @@ package com.prj666.group1.petadoptionsystem.api;
 
 import java.util.Map;
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.User;
 import com.prj666.group1.petadoptionsystem.dto.UserGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPost200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserLoginPostRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserRegisterPostRequest;
-import com.prj666.group1.petadoptionsystem.dto.UserUpdateProfilePutRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserUploadImagePost200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "user", description = "Operations about Users (Both Adopters and Shelters)")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
@@ -232,7 +232,7 @@ public interface UserApi {
     /**
      * PUT /user/update-profile : Update a user profile
      *
-     * @param userUpdateProfilePutRequest  (required)
+     * @param user  (required)
      * @return Generic API response (status code 200)
      */
     @Operation(
@@ -256,7 +256,7 @@ public interface UserApi {
     )
     
     ResponseEntity<ModelApiResponse> userUpdateProfilePut(
-        @Parameter(name = "UserUpdateProfilePutRequest", description = "", required = true) @Valid @RequestBody UserUpdateProfilePutRequest userUpdateProfilePutRequest
+        @Parameter(name = "User", description = "", required = true) @Valid @RequestBody User user
     );
 
 

@@ -83,29 +83,40 @@ public class UserApiController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<ModelApiResponse> userUpdateProfilePut(UserUpdateProfilePutRequest userUpdateProfilePutRequest) {
-
-        User user;
+    public ResponseEntity<ModelApiResponse> userUpdateProfilePut(com.prj666.group1.petadoptionsystem.dto.User user) {
+        User targetUser;
         try {
-            user = userService.getUserFromContext();
+            targetUser = userService.getUserFromContext();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ModelApiResponse().success(false).message(e.getMessage()));
         }
-        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getImageUrl())){
-            user.setImageUrl(userUpdateProfilePutRequest.getImageUrl());
+        if(StringUtils.isNotBlank(user.getEmail())){
+            targetUser.setEmail(user.getEmail());
         }
-        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getName())){
-            user.setName(userUpdateProfilePutRequest.getName());
+        if(StringUtils.isNotBlank(user.getImageUrl())){
+            targetUser.setImageUrl(user.getImageUrl());
         }
-        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getAddress())){
-            user.setAddress(userUpdateProfilePutRequest.getAddress());
+        if(StringUtils.isNotBlank(user.getUsername())){
+            targetUser.setName(user.getUsername());
         }
-        if(StringUtils.isNotBlank(userUpdateProfilePutRequest.getPhone())){
-            user.setPhone(userUpdateProfilePutRequest.getPhone());
+        if(StringUtils.isNotBlank(user.getAddress())){
+            targetUser.setAddress(user.getAddress());
         }
-        user.setProfileSet(true);
-        userService.saveUser(user);
+        if(StringUtils.isNotBlank(user.getCity())){
+            targetUser.setCity(user.getCity());
+        }
+        if(StringUtils.isNotBlank(user.getProvince())){
+            targetUser.setProvince(user.getProvince());
+        }
+        if(StringUtils.isNotBlank(user.getPostalCode())){
+            targetUser.setPostalCode(user.getPostalCode());
+        }
+        if(StringUtils.isNotBlank(user.getPhone())){
+            targetUser.setPhone(user.getPhone());
+        }
+        targetUser.setProfileSet(true);
+        userService.saveUser(targetUser);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ModelApiResponse().success(true).message("User updated successfully"));
@@ -208,10 +219,13 @@ public class UserApiController implements UserApi {
                 .body(new UserGetProfileGet200Response()
                         .success(true)
                         .message("User profile retrieved")
-                        .payload(new UserGetProfileGet200ResponseAllOfPayload()
-                                .id(user.getId())
-                                .name(user.getName())
+                        .payload(new com.prj666.group1.petadoptionsystem.dto.User()
+                                .userId(user.getId())
+                                .username(user.getName())
                                 .address(user.getAddress())
+                                .city(user.getCity())
+                                .province(user.getProvince())
+                                .postalCode(user.getPostalCode())
                                 .phone(user.getPhone())
                                 .role(user.getAccountType())
                                 .email(user.getEmail())

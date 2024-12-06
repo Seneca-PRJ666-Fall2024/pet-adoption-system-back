@@ -69,12 +69,15 @@ public class PetApiController implements PetApi {
                         .message("Shelter pets retrieved")
                         .payload(
                                 petRepository.findByShelterUserId(user.getId())
-                                        .stream().map(p ->
-                                               new Pet()
+                                        .stream().map(p ->{
+                                               Pet pet = new Pet()
                                                        .petId(p.getId())
                                                        .petName(p.getName())
-                                                       .images(p.getImages())
-                                                       .attributes(attributeService.getPetAttributes(p))
+                                                       .images(p.getImages());
+                                               attributeService.getPetAttributes(p)
+                                                        .forEach(pet::putAdditionalProperty);
+                                               return pet;
+                                            }
                                         ) .toList()
                         )
                 );
@@ -83,18 +86,21 @@ public class PetApiController implements PetApi {
     @Override
     public ResponseEntity<PetGetProfilePetIdGet200Response> petGetProfilePetIdGet(String petId) {
         return petRepository.findById(petId)
-                .map(pet -> ResponseEntity.status(HttpStatus.OK)
-                    .body(new PetGetProfilePetIdGet200Response()
-                        .success(true)
-                        .message("Pet profile loaded successfully")
-                        .payload(new Pet()
+                .map(pet -> {
+                    Pet targetPet = new Pet()
                             .petId(pet.getId())
                             .petName(pet.getName())
-                            .images(pet.getImages())
-                            .attributes(attributeService.getPetAttributes(pet))
-                        )
-                    )).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new PetGetProfilePetIdGet200Response()
+                            .images(pet.getImages());
+                    attributeService.getPetAttributes(pet)
+                            .forEach(targetPet::putAdditionalProperty);
+                    return ResponseEntity.status(HttpStatus.OK)
+                        .body(new PetGetProfilePetIdGet200Response()
+                            .success(true)
+                            .message("Pet profile loaded successfully")
+                            .payload(targetPet)
+                        );
+                    }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new PetGetProfilePetIdGet200Response()
                             .success(false)
                             .message("Pet not found: " + petId)
                     )

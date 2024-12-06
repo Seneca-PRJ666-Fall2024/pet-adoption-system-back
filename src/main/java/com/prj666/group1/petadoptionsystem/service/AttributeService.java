@@ -49,7 +49,7 @@ public class AttributeService {
         return attributeRepository.findByAttributeGroupId(attributeGroupId);
     }
 
-    public Map<String, List<String>> getPetAttributes(Pet pet){
+    public Map<String, String> getPetAttributes(Pet pet){
         if(pet.getAttributes() != null){
             return  pet.getAttributes().stream()
                     .map(a -> attributeRepository.findById(a))
@@ -61,10 +61,17 @@ public class AttributeService {
                     .collect(Collectors.toMap(
                             a -> attributeGroupRepository.findById(a.getKey())
                                     .map(AttributeGroup::getName).orElse("Unknown"),
-                            a -> a.getValue()
-                                    .stream()
-                                    .map(Attribute::getName)
-                                    .toList()
+                            a -> {
+                                    List<String> values =  a.getValue()
+                                            .stream()
+                                            .map(Attribute::getName)
+                                            .toList();
+                                    if(values.size() > 1){
+                                        throw new IllegalStateException("Multiple values found for attribute: " + a.getKey());
+                                    } else {
+                                        return values.getFirst();
+                                    }
+                            }
                     ));
         } else {
             return new HashMap<>();

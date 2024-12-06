@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * User
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class User {
 
   private String userId;
@@ -35,7 +35,7 @@ public class User {
 
   private String phone;
 
-  private String street;
+  private String address;
 
   private String city;
 
@@ -43,7 +43,7 @@ public class User {
 
   private String postalCode;
 
-  private Integer userStatus;
+  private String imageUrl;
 
   public User userId(String userId) {
     this.userId = userId;
@@ -165,24 +165,24 @@ public class User {
     this.phone = phone;
   }
 
-  public User street(String street) {
-    this.street = street;
+  public User address(String address) {
+    this.address = address;
     return this;
   }
 
   /**
-   * Get street
-   * @return street
+   * Get address
+   * @return address
    */
   
-  @Schema(name = "street", example = "1 Young St.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("street")
-  public String getStreet() {
-    return street;
+  @Schema(name = "address", example = "1 Young St.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("address")
+  public String getAddress() {
+    return address;
   }
 
-  public void setStreet(String street) {
-    this.street = street;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
   public User city(String city) {
@@ -245,24 +245,24 @@ public class User {
     this.postalCode = postalCode;
   }
 
-  public User userStatus(Integer userStatus) {
-    this.userStatus = userStatus;
+  public User imageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
     return this;
   }
 
   /**
-   * User Status
-   * @return userStatus
+   * Get imageUrl
+   * @return imageUrl
    */
   
-  @Schema(name = "userStatus", example = "1", description = "User Status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("userStatus")
-  public Integer getUserStatus() {
-    return userStatus;
+  @Schema(name = "imageUrl", example = "http://some.site/images.image.jpg", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("imageUrl")
+  public String getImageUrl() {
+    return imageUrl;
   }
 
-  public void setUserStatus(Integer userStatus) {
-    this.userStatus = userStatus;
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 
   @Override
@@ -280,16 +280,16 @@ public class User {
         Objects.equals(this.email, user.email) &&
         Objects.equals(this.password, user.password) &&
         Objects.equals(this.phone, user.phone) &&
-        Objects.equals(this.street, user.street) &&
+        Objects.equals(this.address, user.address) &&
         Objects.equals(this.city, user.city) &&
         Objects.equals(this.province, user.province) &&
         Objects.equals(this.postalCode, user.postalCode) &&
-        Objects.equals(this.userStatus, user.userStatus);
+        Objects.equals(this.imageUrl, user.imageUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, role, username, email, password, phone, street, city, province, postalCode, userStatus);
+    return Objects.hash(userId, role, username, email, password, phone, address, city, province, postalCode, imageUrl);
   }
 
   @Override
@@ -302,11 +302,11 @@ public class User {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
-    sb.append("    street: ").append(toIndentedString(street)).append("\n");
+    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    city: ").append(toIndentedString(city)).append("\n");
     sb.append("    province: ").append(toIndentedString(province)).append("\n");
     sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
-    sb.append("    userStatus: ").append(toIndentedString(userStatus)).append("\n");
+    sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }

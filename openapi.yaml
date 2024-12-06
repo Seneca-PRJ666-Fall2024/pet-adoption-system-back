@@ -118,7 +118,7 @@ paths:
             schema:
               type: object
               additionalProperties:
-                type: array
+                type: string
                 items:
                   type: string
                 description: >
@@ -190,28 +190,7 @@ paths:
                   - type: object
                     properties:
                       payload:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            example: "12ad3fa..."
-                          email:
-                            type: string
-                            example: user@example.com
-                          role:
-                            $ref: '#/components/schemas/Role'
-                          name:
-                            type: string
-                            example: John Doe
-                          phone:
-                            type: string
-                            example: 123-456-7890
-                          address:
-                            type: string
-                            example: 123 Pet Lane
-                          imageUrl:
-                            type: string
-                            example: http://some.site/images/img.jpg
+                        $ref: '#/components/schemas/User'
         '401':
           description: Unauthorized access
           $ref: '#/components/responses/GenericApiResponse'
@@ -228,20 +207,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: John Doe
-                phone:
-                  type: string
-                  example: 123-456-7890
-                address:
-                  type: string
-                  example: 123 Pet Lane
-                imageUrl:
-                  type: string
-                  example: http://some.site/images/image.jpg
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: User contacts updated successfully
@@ -690,7 +656,7 @@ components:
         petId:
           type: string
           example: "0adf23ff..."
-        shelterId:
+        shelterUserId:
           type: string
           example: "0adf23ff..."
         petName:
@@ -701,18 +667,14 @@ components:
           items:
             type: string
           example: ["http://some.site/images/image.jpg"]
-        attributes:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-            description: >
-              A map where each key is the name of an attribute group, and the value is a list of
-              selected preferences within that group.
-            example:
-              "gender": [ "male" ]
-              "environment": [ "house", "condo" ]
+      additionalProperties:
+        type: string
+        description: >
+          A map where each key is the name of an attribute group, and the value is a list of
+          selected preferences within that group.
+        example:
+          "gender": "male"
+          "environment": "house"
       type: object
 
     User:
@@ -734,7 +696,7 @@ components:
         phone:
           type: string
           example: 12345
-        street:
+        address:
           type: string
           example: 1 Young St.
         city:
@@ -746,11 +708,9 @@ components:
         postalCode:
           type: string
           example: A1B 2C3
-        userStatus:
-          type: integer
-          format: int32
-          example: 1
-          description: User Status
+        imageUrl:
+          type: string
+          example: http://some.site/images.image.jpg
       type: object
 
     Recommendation:

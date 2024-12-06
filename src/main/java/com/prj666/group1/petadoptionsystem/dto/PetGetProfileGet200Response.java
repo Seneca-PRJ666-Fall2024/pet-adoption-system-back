@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_pet_get_profile_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class PetGetProfileGet200Response {
 
   private Boolean success;
@@ -32,7 +32,7 @@ public class PetGetProfileGet200Response {
   private String message;
 
   @Valid
-  private List<@Valid Pet> payload = new ArrayList<>();
+  private List<Pet> payload = new ArrayList<>();
 
   public PetGetProfileGet200Response success(Boolean success) {
     this.success = success;
@@ -74,7 +74,7 @@ public class PetGetProfileGet200Response {
     this.message = message;
   }
 
-  public PetGetProfileGet200Response payload(List<@Valid Pet> payload) {
+  public PetGetProfileGet200Response payload(List<Pet> payload) {
     this.payload = payload;
     return this;
   }
@@ -94,11 +94,11 @@ public class PetGetProfileGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public List<@Valid Pet> getPayload() {
+  public List<Pet> getPayload() {
     return payload;
   }
 
-  public void setPayload(List<@Valid Pet> payload) {
+  public void setPayload(List<Pet> payload) {
     this.payload = payload;
   }
 

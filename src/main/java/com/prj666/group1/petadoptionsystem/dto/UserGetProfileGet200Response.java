@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.prj666.group1.petadoptionsystem.dto.UserGetProfileGet200ResponseAllOfPayload;
+import com.prj666.group1.petadoptionsystem.dto.User;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -21,14 +21,14 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_get_profile_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-04T19:14:42.596594700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserGetProfileGet200Response {
 
   private Boolean success;
 
   private String message;
 
-  private UserGetProfileGet200ResponseAllOfPayload payload;
+  private User payload;
 
   public UserGetProfileGet200Response success(Boolean success) {
     this.success = success;
@@ -70,7 +70,7 @@ public class UserGetProfileGet200Response {
     this.message = message;
   }
 
-  public UserGetProfileGet200Response payload(UserGetProfileGet200ResponseAllOfPayload payload) {
+  public UserGetProfileGet200Response payload(User payload) {
     this.payload = payload;
     return this;
   }
@@ -82,11 +82,11 @@ public class UserGetProfileGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public UserGetProfileGet200ResponseAllOfPayload getPayload() {
+  public User getPayload() {
     return payload;
   }
 
-  public void setPayload(UserGetProfileGet200ResponseAllOfPayload payload) {
+  public void setPayload(User payload) {
     this.payload = payload;
   }
 
