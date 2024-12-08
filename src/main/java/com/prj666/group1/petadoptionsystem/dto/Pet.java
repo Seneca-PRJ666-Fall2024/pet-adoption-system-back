@@ -4,9 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -25,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
  * Pet
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Pet {
 
   private String petId;
@@ -34,8 +31,7 @@ public class Pet {
 
   private String petName;
 
-  @Valid
-  private List<String> images = new ArrayList<>();
+  private String imageUrl;
 
   public Pet petId(String petId) {
     this.petId = petId;
@@ -97,32 +93,24 @@ public class Pet {
     this.petName = petName;
   }
 
-  public Pet images(List<String> images) {
-    this.images = images;
-    return this;
-  }
-
-  public Pet addImagesItem(String imagesItem) {
-    if (this.images == null) {
-      this.images = new ArrayList<>();
-    }
-    this.images.add(imagesItem);
+  public Pet imageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
     return this;
   }
 
   /**
-   * Get images
-   * @return images
+   * Get imageUrl
+   * @return imageUrl
    */
   
-  @Schema(name = "images", example = "[\"http://some.site/images/image.jpg\"]", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("images")
-  public List<String> getImages() {
-    return images;
+  @Schema(name = "imageUrl", example = "[\"http://some.site/images/image.jpg\"]", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("imageUrl")
+  public String getImageUrl() {
+    return imageUrl;
   }
 
-  public void setImages(List<String> images) {
-    this.images = images;
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
     /**
     * A container for additional, undeclared properties.
@@ -174,13 +162,13 @@ public class Pet {
     return Objects.equals(this.petId, pet.petId) &&
         Objects.equals(this.shelterUserId, pet.shelterUserId) &&
         Objects.equals(this.petName, pet.petName) &&
-        Objects.equals(this.images, pet.images) &&
+        Objects.equals(this.imageUrl, pet.imageUrl) &&
     Objects.equals(this.additionalProperties, pet.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(petId, shelterUserId, petName, images, additionalProperties);
+    return Objects.hash(petId, shelterUserId, petName, imageUrl, additionalProperties);
   }
 
   @Override
@@ -190,7 +178,7 @@ public class Pet {
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
     sb.append("    shelterUserId: ").append(toIndentedString(shelterUserId)).append("\n");
     sb.append("    petName: ").append(toIndentedString(petName)).append("\n");
-    sb.append("    images: ").append(toIndentedString(images)).append("\n");
+    sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
     
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");

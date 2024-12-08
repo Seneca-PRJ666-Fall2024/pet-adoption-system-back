@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200ResponseAllOfPayloadInner;
+import com.prj666.group1.petadoptionsystem.dto.Adoption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_adoption_status_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class AdoptionStatusGet200Response {
 
   private Boolean success;
@@ -32,7 +32,7 @@ public class AdoptionStatusGet200Response {
   private String message;
 
   @Valid
-  private List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload = new ArrayList<>();
+  private List<@Valid Adoption> payload = new ArrayList<>();
 
   public AdoptionStatusGet200Response success(Boolean success) {
     this.success = success;
@@ -74,12 +74,12 @@ public class AdoptionStatusGet200Response {
     this.message = message;
   }
 
-  public AdoptionStatusGet200Response payload(List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload) {
+  public AdoptionStatusGet200Response payload(List<@Valid Adoption> payload) {
     this.payload = payload;
     return this;
   }
 
-  public AdoptionStatusGet200Response addPayloadItem(AdoptionStatusGet200ResponseAllOfPayloadInner payloadItem) {
+  public AdoptionStatusGet200Response addPayloadItem(Adoption payloadItem) {
     if (this.payload == null) {
       this.payload = new ArrayList<>();
     }
@@ -94,11 +94,11 @@ public class AdoptionStatusGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> getPayload() {
+  public List<@Valid Adoption> getPayload() {
     return payload;
   }
 
-  public void setPayload(List<@Valid AdoptionStatusGet200ResponseAllOfPayloadInner> payload) {
+  public void setPayload(List<@Valid Adoption> payload) {
     this.payload = payload;
   }
 

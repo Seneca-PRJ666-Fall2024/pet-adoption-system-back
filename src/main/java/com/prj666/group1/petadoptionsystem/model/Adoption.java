@@ -21,6 +21,9 @@ public class Adoption {
     @Indexed
     private String userId;
 
+    @Indexed
+    private String shelterUserId;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
@@ -29,11 +32,12 @@ public class Adoption {
     // Constructors
     public Adoption() {}
 
-    public Adoption(String petId, String userId, LocalDate date, AdoptionStatus status) {
+    public Adoption(String petId, String userId, String shelterUserId, LocalDate date, AdoptionStatus status) {
         this.petId = petId;
         this.date = date;
         this.status = status;
         this.userId = userId;
+        this.shelterUserId = shelterUserId;
     }
 
     // Getters and Setters
@@ -72,5 +76,13 @@ public class Adoption {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getShelterUserId() {
+        return shelterUserId;
+    }
+
+    public void setShelterUserId(String shelterUserId) {
+        this.shelterUserId = shelterUserId;
     }
 }

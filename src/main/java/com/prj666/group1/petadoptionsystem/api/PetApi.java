@@ -6,10 +6,9 @@
 package com.prj666.group1.petadoptionsystem.api;
 
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
-import com.prj666.group1.petadoptionsystem.dto.PetAddProfilePostRequest;
+import com.prj666.group1.petadoptionsystem.dto.Pet;
 import com.prj666.group1.petadoptionsystem.dto.PetGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.PetGetProfilePetIdGet200Response;
-import com.prj666.group1.petadoptionsystem.dto.PetUpdateProfilePutRequest;
 import com.prj666.group1.petadoptionsystem.dto.UserUploadImagePost200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "pet", description = "Operations about Pets")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
@@ -47,7 +46,7 @@ public interface PetApi {
      * POST /pet/add-profile : Add a new pet profile to the system
      * Add a new pet profile to the system.
      *
-     * @param petAddProfilePostRequest  (required)
+     * @param pet  (required)
      * @return Generic API response (status code 201)
      *         or Generic API response (status code 405)
      */
@@ -76,7 +75,7 @@ public interface PetApi {
     )
     
     ResponseEntity<ModelApiResponse> petAddProfilePost(
-        @Parameter(name = "PetAddProfilePostRequest", description = "", required = true) @Valid @RequestBody PetAddProfilePostRequest petAddProfilePostRequest
+        @Parameter(name = "Pet", description = "", required = true) @Valid @RequestBody Pet pet
     );
 
 
@@ -87,9 +86,6 @@ public interface PetApi {
      * @param petId The unique ID of the pet profile to delete. (required)
      * @return Generic API response (status code 204)
      *         or Generic API response (status code 400)
-     *         or Generic API response (status code 401)
-     *         or Generic API response (status code 403)
-     *         or Generic API response (status code 404)
      */
     @Operation(
         operationId = "petDeleteProfilePetIdDelete",
@@ -101,15 +97,6 @@ public interface PetApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Generic API response", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Generic API response", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Generic API response", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         },
@@ -202,8 +189,9 @@ public interface PetApi {
     /**
      * PUT /pet/update-profile : Update pet profile
      *
-     * @param petUpdateProfilePutRequest  (required)
+     * @param pet  (required)
      * @return Generic API response (status code 200)
+     *         or Generic API response (status code 400)
      */
     @Operation(
         operationId = "petUpdateProfilePut",
@@ -211,6 +199,9 @@ public interface PetApi {
         tags = { "pet" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Generic API response", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
             })
         },
@@ -226,7 +217,7 @@ public interface PetApi {
     )
     
     ResponseEntity<ModelApiResponse> petUpdateProfilePut(
-        @Parameter(name = "PetUpdateProfilePutRequest", description = "", required = true) @Valid @RequestBody PetUpdateProfilePutRequest petUpdateProfilePutRequest
+        @Parameter(name = "Pet", description = "", required = true) @Valid @RequestBody Pet pet
     );
 
 

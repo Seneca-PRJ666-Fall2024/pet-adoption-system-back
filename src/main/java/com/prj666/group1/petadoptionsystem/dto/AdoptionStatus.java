@@ -20,16 +20,24 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets AdoptionStatus
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public enum AdoptionStatus {
   
-  NEW("new"),
+  SUBMITTED("Submitted"),
   
-  PENDING("pending"),
+  REVIEWING("Reviewing"),
   
-  APPROVED("approved"),
+  WAITLISTED("Waitlisted"),
   
-  REJECTED("rejected");
+  INTERVIEWING("Interviewing"),
+  
+  DECISION_MAKING("Decision Making"),
+  
+  ADOPTED("Adopted"),
+  
+  REJECTED("Rejected"),
+  
+  CANCELLED("Cancelled");
 
   private String value;
 

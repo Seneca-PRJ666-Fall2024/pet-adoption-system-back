@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class AdoptionService {
         }
         if(adoptionRepository.findByPetId(pet.get().getId())
                 .stream()
-                .anyMatch(adoption -> adoption.getStatus() == AdoptionStatus.APPROVED)){
+                .anyMatch(adoption -> adoption.getStatus() == AdoptionStatus.ADOPTED)){
             throw new IllegalArgumentException("This pet has already been adopted: " + recommendation.getPetId());
         }
         if(adoptionRepository.findByUserId(recommendation.getUserId())
@@ -54,7 +55,8 @@ public class AdoptionService {
         Adoption newAdoption = new Adoption();
         newAdoption.setUserId(recommendation.getUserId());
         newAdoption.setPetId(recommendation.getPetId());
-        newAdoption.setStatus(AdoptionStatus.NEW);
+        newAdoption.setShelterUserId(pet.get().getShelterUserId());
+        newAdoption.setStatus(AdoptionStatus.SUBMITTED);
         newAdoption.setDate(LocalDate.now());
         adoptionRepository.save(newAdoption);
         recommendation.setStatus(RecommendationStatus.ACCEPTED);

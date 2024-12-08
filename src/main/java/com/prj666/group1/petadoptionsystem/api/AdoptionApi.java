@@ -5,6 +5,7 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
+import com.prj666.group1.petadoptionsystem.dto.Adoption;
 import com.prj666.group1.petadoptionsystem.dto.AdoptionStatusGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.AdoptionStoryGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
@@ -34,11 +35,86 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-06T17:56:29.361081200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "adoption", description = "Operations about Adoptions")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
 public interface AdoptionApi {
+
+    /**
+     * PUT /adoption/{id}/cancel : Cancel adoption
+     * Adopter cancels adoption
+     *
+     * @param id The ID of the adoption to cancel (required)
+     * @return Generic API response (status code 200)
+     *         or Generic API response (status code 401)
+     */
+    @Operation(
+        operationId = "adoptionIdCancelPut",
+        summary = "Cancel adoption",
+        description = "Adopter cancels adoption",
+        tags = { "adoption" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/adoption/{id}/cancel",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<ModelApiResponse> adoptionIdCancelPut(
+        @Parameter(name = "id", description = "The ID of the adoption to cancel", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
+    );
+
+
+    /**
+     * PUT /adoption/{id}/status : Retrieve adoption status
+     * Fetches the current status of adoptions for the authenticated adopter.
+     *
+     * @param id The ID of the adoption to update (required)
+     * @param adoption  (required)
+     * @return Generic API response (status code 200)
+     *         or Generic API response (status code 401)
+     */
+    @Operation(
+        operationId = "adoptionIdStatusPut",
+        summary = "Retrieve adoption status",
+        description = "Fetches the current status of adoptions for the authenticated adopter.",
+        tags = { "adoption" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Generic API response", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/adoption/{id}/status",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<ModelApiResponse> adoptionIdStatusPut(
+        @Parameter(name = "id", description = "The ID of the adoption to update", required = true, in = ParameterIn.PATH) @PathVariable("id") String id,
+        @Parameter(name = "Adoption", description = "", required = true) @Valid @RequestBody Adoption adoption
+    );
+
 
     /**
      * GET /adoption/status : Retrieve adoption status

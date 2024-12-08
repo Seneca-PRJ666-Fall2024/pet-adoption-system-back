@@ -13,6 +13,7 @@ public class Pet {
     private String name;
     @Indexed
     private String shelterUserId;
+    private String imageUrl;
 
     private List<String> attributes;
 
@@ -52,5 +53,13 @@ public class Pet {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

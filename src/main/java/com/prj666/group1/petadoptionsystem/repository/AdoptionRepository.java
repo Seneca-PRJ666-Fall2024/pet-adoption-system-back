@@ -13,4 +13,6 @@ public interface AdoptionRepository extends MongoRepository<Adoption, String> {
     List<Adoption> findByUserId(String userId);
 
     List<Adoption> findByPetId(String petId);
+
+    List<Adoption> findByShelterUserId(String petId);
 }
