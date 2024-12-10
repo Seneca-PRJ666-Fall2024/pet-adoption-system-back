@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_login_post_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserLoginPostRequest {
 
   private String email;

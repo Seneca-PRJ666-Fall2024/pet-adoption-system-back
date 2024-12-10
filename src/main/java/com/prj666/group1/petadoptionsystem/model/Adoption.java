@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Document(collection = "Adoption")
 public class Adoption {
@@ -24,20 +25,27 @@ public class Adoption {
     @Indexed
     private String shelterUserId;
 
+    @Indexed
+    private String recommendationId;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
     private AdoptionStatus status;
 
+    private Map<String, String> answers;
+
     // Constructors
     public Adoption() {}
 
-    public Adoption(String petId, String userId, String shelterUserId, LocalDate date, AdoptionStatus status) {
+    public Adoption(String petId, String userId, String shelterUserId, LocalDate date, AdoptionStatus status, Map<String, String> answers, String recommendationId) {
         this.petId = petId;
         this.date = date;
         this.status = status;
         this.userId = userId;
         this.shelterUserId = shelterUserId;
+        this.answers = answers;
+        this.recommendationId = recommendationId;
     }
 
     // Getters and Setters
@@ -84,5 +92,21 @@ public class Adoption {
 
     public void setShelterUserId(String shelterUserId) {
         this.shelterUserId = shelterUserId;
+    }
+
+    public Map<String, String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Map<String, String> answers) {
+        this.answers = answers;
+    }
+
+    public String getRecommendationId() {
+        return recommendationId;
+    }
+
+    public void setRecommendationId(String recommendationId) {
+        this.recommendationId = recommendationId;
     }
 }

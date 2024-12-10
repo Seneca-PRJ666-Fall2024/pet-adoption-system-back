@@ -5,10 +5,8 @@
  */
 package com.prj666.group1.petadoptionsystem.api;
 
-import com.prj666.group1.petadoptionsystem.dto.MatchingRecommendationIdAcceptPut201Response;
-import com.prj666.group1.petadoptionsystem.dto.MatchingRecommendationNextGet200Response;
-import com.prj666.group1.petadoptionsystem.dto.MatchingRecommendationsGet200Response;
-import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
+import com.prj666.group1.petadoptionsystem.dto.MatchingRecommendationAcceptedGet200Response;
+import com.prj666.group1.petadoptionsystem.dto.MatchingRecommendationIdAcceptPut200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,25 +33,54 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "matching", description = "Operations about Adopters")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
 public interface MatchingApi {
 
     /**
+     * GET /matching/recommendation/accepted : Get a list of accepted recommendations
+     *
+     * @return A list of recommended pets (status code 200)
+     */
+    @Operation(
+        operationId = "matchingRecommendationAcceptedGet",
+        summary = "Get a list of accepted recommendations",
+        tags = { "matching" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "A list of recommended pets", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationAcceptedGet200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/matching/recommendation/accepted",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<MatchingRecommendationAcceptedGet200Response> matchingRecommendationAcceptedGet(
+        
+    );
+
+
+    /**
      * PUT /matching/recommendation/{id}/accept : Accept a recommendation and create an adoption
      *
      * @param id The ID of the recommendation to accept (required)
-     * @return The next recommendation item (status code 201)
+     * @return The next recommendation item (status code 200)
      */
     @Operation(
         operationId = "matchingRecommendationIdAcceptPut",
         summary = "Accept a recommendation and create an adoption",
         tags = { "matching" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "The next recommendation item", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationIdAcceptPut201Response.class))
+            @ApiResponse(responseCode = "200", description = "The next recommendation item", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationIdAcceptPut200Response.class))
             })
         },
         security = {
@@ -66,7 +93,7 @@ public interface MatchingApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<MatchingRecommendationIdAcceptPut201Response> matchingRecommendationIdAcceptPut(
+    ResponseEntity<MatchingRecommendationIdAcceptPut200Response> matchingRecommendationIdAcceptPut(
         @Parameter(name = "id", description = "The ID of the recommendation to accept", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
     );
 
@@ -75,15 +102,15 @@ public interface MatchingApi {
      * PUT /matching/recommendation/{id}/reject : Reject a recommendation
      *
      * @param id The ID of the recommendation to reject (required)
-     * @return Generic API response (status code 201)
+     * @return The next recommendation item (status code 200)
      */
     @Operation(
         operationId = "matchingRecommendationIdRejectPut",
         summary = "Reject a recommendation",
         tags = { "matching" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Generic API response", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+            @ApiResponse(responseCode = "200", description = "The next recommendation item", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationIdAcceptPut200Response.class))
             })
         },
         security = {
@@ -96,7 +123,7 @@ public interface MatchingApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<ModelApiResponse> matchingRecommendationIdRejectPut(
+    ResponseEntity<MatchingRecommendationIdAcceptPut200Response> matchingRecommendationIdRejectPut(
         @Parameter(name = "id", description = "The ID of the recommendation to reject", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
     );
 
@@ -104,6 +131,7 @@ public interface MatchingApi {
     /**
      * GET /matching/recommendation/next : Get the next recommendation for the adopter
      *
+     * @param num The number of recomendations to return (optional, default to 1)
      * @return The next recommendation item (status code 200)
      */
     @Operation(
@@ -112,7 +140,7 @@ public interface MatchingApi {
         tags = { "matching" },
         responses = {
             @ApiResponse(responseCode = "200", description = "The next recommendation item", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationNextGet200Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationAcceptedGet200Response.class))
             })
         },
         security = {
@@ -125,37 +153,8 @@ public interface MatchingApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<MatchingRecommendationNextGet200Response> matchingRecommendationNextGet(
-        
-    );
-
-
-    /**
-     * GET /matching/recommendations : Get a list of recommended pets based on preferences
-     *
-     * @return A list of recommended pets (status code 200)
-     */
-    @Operation(
-        operationId = "matchingRecommendationsGet",
-        summary = "Get a list of recommended pets based on preferences",
-        tags = { "matching" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "A list of recommended pets", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MatchingRecommendationsGet200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/matching/recommendations",
-        produces = { "application/json" }
-    )
-    
-    ResponseEntity<MatchingRecommendationsGet200Response> matchingRecommendationsGet(
-        
+    ResponseEntity<MatchingRecommendationAcceptedGet200Response> matchingRecommendationNextGet(
+        @Min(1) @Parameter(name = "num", description = "The number of recomendations to return", in = ParameterIn.QUERY) @Valid @RequestParam(value = "num", required = false, defaultValue = "1") Integer num
     );
 
 }

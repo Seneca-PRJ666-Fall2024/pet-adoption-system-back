@@ -19,6 +19,8 @@ public class Pet {
 
     private List<String> images;
 
+    private com.prj666.group1.petadoptionsystem.dto.Pet.StatusEnum status;
+
     public String getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class Pet {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public com.prj666.group1.petadoptionsystem.dto.Pet.StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(com.prj666.group1.petadoptionsystem.dto.Pet.StatusEnum status) {
+        this.status = status;
     }
 }

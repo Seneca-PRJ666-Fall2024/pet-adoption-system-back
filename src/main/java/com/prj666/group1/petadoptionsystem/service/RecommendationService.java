@@ -33,7 +33,7 @@ public class RecommendationService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<Recommendation> getNextRecommendation(User user){
+    public List<Recommendation> getNextRecommendation(User user, int number){
 
         if(StringUtils.isNotBlank(user.getRecommendationList())){
             Optional<RecommendationList> list = recommendationListRepository.findById(user.getRecommendationList());
@@ -41,9 +41,10 @@ public class RecommendationService {
                 List<Recommendation> recommend = recommendationRepository
                         .findByRecommendationListId(list.get().getId())
                         .stream().filter(r -> r.getStatus() == RecommendationStatus.NEW)
+                        .limit(number)
                         .toList();
                 if(!recommend.isEmpty()){
-                    return Optional.of(recommend.getFirst());
+                    return recommend;
                 } else {
                     recommendationListRepository.delete(list.get());
                 }
@@ -51,12 +52,10 @@ public class RecommendationService {
 
         }
         RecommendationList newList = createNewRecommendationList(user);
-        List<Recommendation> recommend = recommendationRepository.findByRecommendationListId(newList.getId());
-        if(!recommend.isEmpty()){
-            return Optional.of(recommend.getFirst());
-        } else {
-            return Optional.empty();
-        }
+        return recommendationRepository.findByRecommendationListId(newList.getId())
+                .stream()
+                .limit(number)
+                .toList();
     }
 
     private RecommendationList createNewRecommendationList(User user){

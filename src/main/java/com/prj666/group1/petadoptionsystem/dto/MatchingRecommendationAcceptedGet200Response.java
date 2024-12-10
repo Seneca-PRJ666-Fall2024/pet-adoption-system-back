@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.prj666.group1.petadoptionsystem.dto.Recommendation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -17,20 +20,21 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * MatchingRecommendationNextGet200Response
+ * MatchingRecommendationAcceptedGet200Response
  */
 
-@JsonTypeName("_matching_recommendation_next_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class MatchingRecommendationNextGet200Response {
+@JsonTypeName("_matching_recommendation_accepted_get_200_response")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class MatchingRecommendationAcceptedGet200Response {
 
   private Boolean success;
 
   private String message;
 
-  private Recommendation payload;
+  @Valid
+  private List<@Valid Recommendation> payload = new ArrayList<>();
 
-  public MatchingRecommendationNextGet200Response success(Boolean success) {
+  public MatchingRecommendationAcceptedGet200Response success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -50,7 +54,7 @@ public class MatchingRecommendationNextGet200Response {
     this.success = success;
   }
 
-  public MatchingRecommendationNextGet200Response message(String message) {
+  public MatchingRecommendationAcceptedGet200Response message(String message) {
     this.message = message;
     return this;
   }
@@ -70,8 +74,16 @@ public class MatchingRecommendationNextGet200Response {
     this.message = message;
   }
 
-  public MatchingRecommendationNextGet200Response payload(Recommendation payload) {
+  public MatchingRecommendationAcceptedGet200Response payload(List<@Valid Recommendation> payload) {
     this.payload = payload;
+    return this;
+  }
+
+  public MatchingRecommendationAcceptedGet200Response addPayloadItem(Recommendation payloadItem) {
+    if (this.payload == null) {
+      this.payload = new ArrayList<>();
+    }
+    this.payload.add(payloadItem);
     return this;
   }
 
@@ -82,11 +94,11 @@ public class MatchingRecommendationNextGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public Recommendation getPayload() {
+  public List<@Valid Recommendation> getPayload() {
     return payload;
   }
 
-  public void setPayload(Recommendation payload) {
+  public void setPayload(List<@Valid Recommendation> payload) {
     this.payload = payload;
   }
 
@@ -98,10 +110,10 @@ public class MatchingRecommendationNextGet200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MatchingRecommendationNextGet200Response matchingRecommendationNextGet200Response = (MatchingRecommendationNextGet200Response) o;
-    return Objects.equals(this.success, matchingRecommendationNextGet200Response.success) &&
-        Objects.equals(this.message, matchingRecommendationNextGet200Response.message) &&
-        Objects.equals(this.payload, matchingRecommendationNextGet200Response.payload);
+    MatchingRecommendationAcceptedGet200Response matchingRecommendationAcceptedGet200Response = (MatchingRecommendationAcceptedGet200Response) o;
+    return Objects.equals(this.success, matchingRecommendationAcceptedGet200Response.success) &&
+        Objects.equals(this.message, matchingRecommendationAcceptedGet200Response.message) &&
+        Objects.equals(this.payload, matchingRecommendationAcceptedGet200Response.payload);
   }
 
   @Override
@@ -112,7 +124,7 @@ public class MatchingRecommendationNextGet200Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MatchingRecommendationNextGet200Response {\n");
+    sb.append("class MatchingRecommendationAcceptedGet200Response {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    payload: ").append(toIndentedString(payload)).append("\n");

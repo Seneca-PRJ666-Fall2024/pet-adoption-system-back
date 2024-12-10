@@ -22,14 +22,36 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_login_post_200_response_allOf_payload")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserLoginPost200ResponseAllOfPayload {
+
+  private String username;
 
   private Role role;
 
   private Boolean profileSet;
 
   private String token;
+
+  public UserLoginPost200ResponseAllOfPayload username(String username) {
+    this.username = username;
+    return this;
+  }
+
+  /**
+   * Get username
+   * @return username
+   */
+  
+  @Schema(name = "username", example = "John Doe", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("username")
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
   public UserLoginPost200ResponseAllOfPayload role(Role role) {
     this.role = role;
@@ -100,20 +122,22 @@ public class UserLoginPost200ResponseAllOfPayload {
       return false;
     }
     UserLoginPost200ResponseAllOfPayload userLoginPost200ResponseAllOfPayload = (UserLoginPost200ResponseAllOfPayload) o;
-    return Objects.equals(this.role, userLoginPost200ResponseAllOfPayload.role) &&
+    return Objects.equals(this.username, userLoginPost200ResponseAllOfPayload.username) &&
+        Objects.equals(this.role, userLoginPost200ResponseAllOfPayload.role) &&
         Objects.equals(this.profileSet, userLoginPost200ResponseAllOfPayload.profileSet) &&
         Objects.equals(this.token, userLoginPost200ResponseAllOfPayload.token);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(role, profileSet, token);
+    return Objects.hash(username, role, profileSet, token);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserLoginPost200ResponseAllOfPayload {\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    profileSet: ").append(toIndentedString(profileSet)).append("\n");
     sb.append("    token: ").append(toIndentedString(token)).append("\n");

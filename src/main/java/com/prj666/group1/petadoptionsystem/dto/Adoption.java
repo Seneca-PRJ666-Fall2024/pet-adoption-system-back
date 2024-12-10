@@ -20,11 +20,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.*;
 import jakarta.annotation.Generated;
 
+import java.util.Map;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 /**
  * Adoption
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Adoption {
 
   private String adoptionId;
@@ -181,6 +185,43 @@ public class Adoption {
   public void setDate(LocalDate date) {
     this.date = date;
   }
+    /**
+    * A container for additional, undeclared properties.
+    * This is a holder for any undeclared properties as specified with
+    * the 'additionalProperties' keyword in the OAS document.
+    */
+    private Map<String, String> additionalProperties;
+
+    /**
+    * Set the additional (undeclared) property with the specified name and value.
+    * If the property does not already exist, create it otherwise replace it.
+    */
+    @JsonAnySetter
+    public Adoption putAdditionalProperty(String key, String value) {
+        if (this.additionalProperties == null) {
+            this.additionalProperties = new HashMap<String, String>();
+        }
+        this.additionalProperties.put(key, value);
+        return this;
+    }
+
+    /**
+    * Return the additional (undeclared) property.
+    */
+    @JsonAnyGetter
+    public Map<String, String> getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    /**
+    * Return the additional (undeclared) property with the specified name.
+    */
+    public String getAdditionalProperty(String key) {
+        if (this.additionalProperties == null) {
+            return null;
+        }
+        return this.additionalProperties.get(key);
+    }
 
   @Override
   public boolean equals(Object o) {
@@ -197,12 +238,13 @@ public class Adoption {
         Objects.equals(this.pet, adoption.pet) &&
         Objects.equals(this.adopter, adoption.adopter) &&
         Objects.equals(this.status, adoption.status) &&
-        Objects.equals(this.date, adoption.date);
+        Objects.equals(this.date, adoption.date) &&
+    Objects.equals(this.additionalProperties, adoption.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(adoptionId, adopterId, shelterUserId, pet, adopter, status, date);
+    return Objects.hash(adoptionId, adopterId, shelterUserId, pet, adopter, status, date, additionalProperties);
   }
 
   @Override
@@ -216,6 +258,8 @@ public class Adoption {
     sb.append("    adopter: ").append(toIndentedString(adopter)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
+    
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }

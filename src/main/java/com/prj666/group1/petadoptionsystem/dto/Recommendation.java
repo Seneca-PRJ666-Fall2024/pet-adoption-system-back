@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.prj666.group1.petadoptionsystem.dto.Pet;
 import com.prj666.group1.petadoptionsystem.dto.RecommendationStatus;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +23,7 @@ import jakarta.annotation.Generated;
  * Recommendation
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Recommendation {
 
   private String id;
@@ -33,6 +34,8 @@ public class Recommendation {
   private LocalDate date;
 
   private RecommendationStatus status;
+
+  private Pet pet;
 
   public Recommendation id(String id) {
     this.id = id;
@@ -114,6 +117,26 @@ public class Recommendation {
     this.status = status;
   }
 
+  public Recommendation pet(Pet pet) {
+    this.pet = pet;
+    return this;
+  }
+
+  /**
+   * Get pet
+   * @return pet
+   */
+  @Valid 
+  @Schema(name = "pet", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("pet")
+  public Pet getPet() {
+    return pet;
+  }
+
+  public void setPet(Pet pet) {
+    this.pet = pet;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -126,12 +149,13 @@ public class Recommendation {
     return Objects.equals(this.id, recommendation.id) &&
         Objects.equals(this.petId, recommendation.petId) &&
         Objects.equals(this.date, recommendation.date) &&
-        Objects.equals(this.status, recommendation.status);
+        Objects.equals(this.status, recommendation.status) &&
+        Objects.equals(this.pet, recommendation.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, petId, date, status);
+    return Objects.hash(id, petId, date, status, pet);
   }
 
   @Override
@@ -142,6 +166,7 @@ public class Recommendation {
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

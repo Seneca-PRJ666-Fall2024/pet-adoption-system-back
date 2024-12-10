@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
  * Pet
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Pet {
 
   private String petId;
@@ -32,6 +33,43 @@ public class Pet {
   private String petName;
 
   private String imageUrl;
+
+  /**
+   * Gets or Sets status
+   */
+  public enum StatusEnum {
+    AVAILABLE("available"),
+    
+    ADOPTED("adopted");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private StatusEnum status;
 
   public Pet petId(String petId) {
     this.petId = petId;
@@ -112,6 +150,26 @@ public class Pet {
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
+
+  public Pet status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
+  /**
+   * Get status
+   * @return status
+   */
+  
+  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("status")
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
     /**
     * A container for additional, undeclared properties.
     * This is a holder for any undeclared properties as specified with
@@ -163,12 +221,13 @@ public class Pet {
         Objects.equals(this.shelterUserId, pet.shelterUserId) &&
         Objects.equals(this.petName, pet.petName) &&
         Objects.equals(this.imageUrl, pet.imageUrl) &&
+        Objects.equals(this.status, pet.status) &&
     Objects.equals(this.additionalProperties, pet.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(petId, shelterUserId, petName, imageUrl, additionalProperties);
+    return Objects.hash(petId, shelterUserId, petName, imageUrl, status, additionalProperties);
   }
 
   @Override
@@ -179,6 +238,7 @@ public class Pet {
     sb.append("    shelterUserId: ").append(toIndentedString(shelterUserId)).append("\n");
     sb.append("    petName: ").append(toIndentedString(petName)).append("\n");
     sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");

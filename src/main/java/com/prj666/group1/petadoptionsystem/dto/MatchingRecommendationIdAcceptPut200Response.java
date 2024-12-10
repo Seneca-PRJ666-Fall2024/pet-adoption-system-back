@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.prj666.group1.petadoptionsystem.dto.Recommendation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,21 +17,20 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * MatchingRecommendationsGet200Response
+ * MatchingRecommendationIdAcceptPut200Response
  */
 
-@JsonTypeName("_matching_recommendations_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
-public class MatchingRecommendationsGet200Response {
+@JsonTypeName("_matching_recommendation__id__accept_put_200_response")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+public class MatchingRecommendationIdAcceptPut200Response {
 
   private Boolean success;
 
   private String message;
 
-  @Valid
-  private List<@Valid Recommendation> payload = new ArrayList<>();
+  private Recommendation payload;
 
-  public MatchingRecommendationsGet200Response success(Boolean success) {
+  public MatchingRecommendationIdAcceptPut200Response success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -54,7 +50,7 @@ public class MatchingRecommendationsGet200Response {
     this.success = success;
   }
 
-  public MatchingRecommendationsGet200Response message(String message) {
+  public MatchingRecommendationIdAcceptPut200Response message(String message) {
     this.message = message;
     return this;
   }
@@ -74,16 +70,8 @@ public class MatchingRecommendationsGet200Response {
     this.message = message;
   }
 
-  public MatchingRecommendationsGet200Response payload(List<@Valid Recommendation> payload) {
+  public MatchingRecommendationIdAcceptPut200Response payload(Recommendation payload) {
     this.payload = payload;
-    return this;
-  }
-
-  public MatchingRecommendationsGet200Response addPayloadItem(Recommendation payloadItem) {
-    if (this.payload == null) {
-      this.payload = new ArrayList<>();
-    }
-    this.payload.add(payloadItem);
     return this;
   }
 
@@ -94,11 +82,11 @@ public class MatchingRecommendationsGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public List<@Valid Recommendation> getPayload() {
+  public Recommendation getPayload() {
     return payload;
   }
 
-  public void setPayload(List<@Valid Recommendation> payload) {
+  public void setPayload(Recommendation payload) {
     this.payload = payload;
   }
 
@@ -110,10 +98,10 @@ public class MatchingRecommendationsGet200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MatchingRecommendationsGet200Response matchingRecommendationsGet200Response = (MatchingRecommendationsGet200Response) o;
-    return Objects.equals(this.success, matchingRecommendationsGet200Response.success) &&
-        Objects.equals(this.message, matchingRecommendationsGet200Response.message) &&
-        Objects.equals(this.payload, matchingRecommendationsGet200Response.payload);
+    MatchingRecommendationIdAcceptPut200Response matchingRecommendationIdAcceptPut200Response = (MatchingRecommendationIdAcceptPut200Response) o;
+    return Objects.equals(this.success, matchingRecommendationIdAcceptPut200Response.success) &&
+        Objects.equals(this.message, matchingRecommendationIdAcceptPut200Response.message) &&
+        Objects.equals(this.payload, matchingRecommendationIdAcceptPut200Response.payload);
   }
 
   @Override
@@ -124,7 +112,7 @@ public class MatchingRecommendationsGet200Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MatchingRecommendationsGet200Response {\n");
+    sb.append("class MatchingRecommendationIdAcceptPut200Response {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    payload: ").append(toIndentedString(payload)).append("\n");

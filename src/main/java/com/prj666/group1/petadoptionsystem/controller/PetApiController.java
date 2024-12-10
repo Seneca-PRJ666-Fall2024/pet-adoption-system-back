@@ -2,6 +2,7 @@ package com.prj666.group1.petadoptionsystem.controller;
 
 import com.prj666.group1.petadoptionsystem.api.PetApi;
 import com.prj666.group1.petadoptionsystem.dto.*;
+import com.prj666.group1.petadoptionsystem.mappers.ModelToDtoMapper;
 import com.prj666.group1.petadoptionsystem.model.User;
 import com.prj666.group1.petadoptionsystem.repository.PetRepository;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
@@ -35,6 +36,9 @@ public class PetApiController implements PetApi {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ModelToDtoMapper modelToDtoMapper;
 
     @Override
     public ResponseEntity<ModelApiResponse> petAddProfilePost(Pet pet) {
@@ -113,29 +117,7 @@ public class PetApiController implements PetApi {
                         .success(true)
                         .message("Shelter pets retrieved")
                         .payload(
-                                petRepository.findByShelterUserId(user.getId())
-                                        .stream().map(p -> {
-                                               Pet pet = new Pet()
-                                                       .shelterUserId(p.getShelterUserId())
-                                                       .petId(p.getId())
-                                                       .petName(p.getName())
-                                                       .imageUrl( p.getImageUrl() != null ? p.getImageUrl() :
-                                                               p.getImages() != null && !p.getImages().isEmpty() ?
-                                                                       p.getImages().getFirst() : null
-                                                       );
-                                               if(p.getAttributes() != null && !p.getAttributes().isEmpty()){
-                                                   p.getAttributes()
-                                                           .forEach(a -> {
-                                                               Pair<String, String> attrName = attMap.get(a);
-                                                               if(attrName == null){
-                                                                   throw new IllegalArgumentException("Invalid pet attribute: " + p.getId() + " : " + a);
-                                                               }
-                                                               pet.putAdditionalProperty(attrName.getFirst(), attrName.getSecond());
-                                                           });
-                                               }
-                                               return pet;
-                                            }
-                                        ) .toList()
+                                modelToDtoMapper.mapPets(petRepository.findByShelterUserId(user.getId()))
                         )
                 );
     }
@@ -143,25 +125,12 @@ public class PetApiController implements PetApi {
     @Override
     public ResponseEntity<PetGetProfilePetIdGet200Response> petGetProfilePetIdGet(String petId) {
         return petRepository.findById(petId)
-                .map(pet -> {
-                    Pet targetPet = new Pet()
-                            .shelterUserId(pet.getShelterUserId())
-                            .petId(pet.getId())
-                            .petName(pet.getName())
-                            .imageUrl( pet.getImageUrl() != null ? pet.getImageUrl() :
-                                    pet.getImages() != null && !pet.getImages().isEmpty() ?
-                                            pet.getImages().getFirst() : null
-                            );
-                    attributeService.getPetAttributes(List.of(pet))
-                            .get(pet.getId())
-                            .forEach(targetPet::putAdditionalProperty);
-                    return ResponseEntity.status(HttpStatus.OK)
-                        .body(new PetGetProfilePetIdGet200Response()
-                            .success(true)
-                            .message("Pet profile loaded successfully")
-                            .payload(targetPet)
-                        );
-                    }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .map(pet -> ResponseEntity.status(HttpStatus.OK)
+                    .body(new PetGetProfilePetIdGet200Response()
+                        .success(true)
+                        .message("Pet profile loaded successfully")
+                        .payload(modelToDtoMapper.mapPets(List.of(pet)).getFirst())
+                    )).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(new PetGetProfilePetIdGet200Response()
                             .success(false)
                             .message("Pet not found: " + petId)

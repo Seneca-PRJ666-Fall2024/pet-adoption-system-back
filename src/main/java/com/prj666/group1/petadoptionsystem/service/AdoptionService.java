@@ -30,8 +30,13 @@ public class AdoptionService {
     @Autowired
     private PetRepository petRepository;
 
-    public Adoption startAdoption(Recommendation recommendation) {
-        if(recommendation.getStatus() != RecommendationStatus.NEW){
+    public Adoption startAdoption(String recommendationId, Map<String, String> answers) {
+        Optional<Recommendation> rec = recommendationRepository.findById(recommendationId);
+        if(rec.isEmpty()){
+            throw new IllegalArgumentException("Wrong recommendationId: " + recommendationId);
+        }
+        Recommendation recommendation = rec.get();
+        if(recommendation.getStatus() != RecommendationStatus.ACCEPTED){
             throw new IllegalArgumentException("Wrong recommendation status: " + recommendation.getStatus());
         }
         Optional<User> user = userRepository.findById(recommendation.getUserId());
@@ -41,6 +46,9 @@ public class AdoptionService {
         Optional<Pet> pet = petRepository.findById(recommendation.getPetId());
         if(pet.isEmpty()){
             throw new IllegalArgumentException("Wrong pet id: " + recommendation.getPetId());
+        }
+        if(!adoptionRepository.findByRecommendationId(recommendationId).isEmpty()){
+            throw new IllegalArgumentException("User has already started adoption for this recommendation: " + recommendationId);
         }
         if(adoptionRepository.findByPetId(pet.get().getId())
                 .stream()
@@ -53,14 +61,14 @@ public class AdoptionService {
             throw new IllegalArgumentException("User already have adoption for this pet: " + recommendation.getPetId());
         }
         Adoption newAdoption = new Adoption();
+        newAdoption.setRecommendationId(recommendationId);
         newAdoption.setUserId(recommendation.getUserId());
         newAdoption.setPetId(recommendation.getPetId());
         newAdoption.setShelterUserId(pet.get().getShelterUserId());
         newAdoption.setStatus(AdoptionStatus.SUBMITTED);
         newAdoption.setDate(LocalDate.now());
+        newAdoption.setAnswers(answers);
         adoptionRepository.save(newAdoption);
-        recommendation.setStatus(RecommendationStatus.ACCEPTED);
-        recommendationRepository.save(recommendation);
         return newAdoption;
     }
 }

@@ -2,6 +2,7 @@ package com.prj666.group1.petadoptionsystem.controller;
 
 import com.prj666.group1.petadoptionsystem.api.UserApi;
 import com.prj666.group1.petadoptionsystem.dto.*;
+import com.prj666.group1.petadoptionsystem.mappers.ModelToDtoMapper;
 import com.prj666.group1.petadoptionsystem.model.Attribute;
 import com.prj666.group1.petadoptionsystem.model.AttributeGroup;
 import com.prj666.group1.petadoptionsystem.model.User;
@@ -38,6 +39,9 @@ public class UserApiController implements UserApi {
     @Value("${openapi.image-base-path}")
     private String imageBasePath;
 
+    @Autowired
+    private ModelToDtoMapper modelToDtoMapper;
+
     @Override
     public ResponseEntity<UserLoginPost200Response> userLoginPost(UserLoginPostRequest userLoginPostRequest) {
         Optional<User> userOptional = userService.login(userLoginPostRequest.getEmail(), userLoginPostRequest.getPassword());
@@ -53,6 +57,7 @@ public class UserApiController implements UserApi {
                                     .role(user.getAccountType())
                                     .profileSet(user.isProfileSet())
                                     .token(user.getToken())
+                                    .username(user.getName())
                             )
             );
         } else {
@@ -219,18 +224,7 @@ public class UserApiController implements UserApi {
                 .body(new UserGetProfileGet200Response()
                         .success(true)
                         .message("User profile retrieved")
-                        .payload(new com.prj666.group1.petadoptionsystem.dto.User()
-                                .userId(user.getId())
-                                .username(user.getName())
-                                .address(user.getAddress())
-                                .city(user.getCity())
-                                .province(user.getProvince())
-                                .postalCode(user.getPostalCode())
-                                .phone(user.getPhone())
-                                .role(user.getAccountType())
-                                .email(user.getEmail())
-                                .imageUrl(user.getImageUrl())
-                        )
+                        .payload(modelToDtoMapper.mapUsers(List.of(user)).getFirst())
                 );
     }
 }

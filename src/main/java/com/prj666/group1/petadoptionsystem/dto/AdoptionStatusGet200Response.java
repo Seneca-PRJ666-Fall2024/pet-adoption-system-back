@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_adoption_status_get_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-08T07:22:15.388559300-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class AdoptionStatusGet200Response {
 
   private Boolean success;
@@ -32,7 +32,7 @@ public class AdoptionStatusGet200Response {
   private String message;
 
   @Valid
-  private List<@Valid Adoption> payload = new ArrayList<>();
+  private List<Adoption> payload = new ArrayList<>();
 
   public AdoptionStatusGet200Response success(Boolean success) {
     this.success = success;
@@ -74,7 +74,7 @@ public class AdoptionStatusGet200Response {
     this.message = message;
   }
 
-  public AdoptionStatusGet200Response payload(List<@Valid Adoption> payload) {
+  public AdoptionStatusGet200Response payload(List<Adoption> payload) {
     this.payload = payload;
     return this;
   }
@@ -94,11 +94,11 @@ public class AdoptionStatusGet200Response {
   @Valid 
   @Schema(name = "payload", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("payload")
-  public List<@Valid Adoption> getPayload() {
+  public List<Adoption> getPayload() {
     return payload;
   }
 
-  public void setPayload(List<@Valid Adoption> payload) {
+  public void setPayload(List<Adoption> payload) {
     this.payload = payload;
   }
 
