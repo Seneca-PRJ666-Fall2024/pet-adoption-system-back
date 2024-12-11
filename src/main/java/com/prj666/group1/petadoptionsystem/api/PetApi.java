@@ -7,6 +7,7 @@ package com.prj666.group1.petadoptionsystem.api;
 
 import com.prj666.group1.petadoptionsystem.dto.ModelApiResponse;
 import com.prj666.group1.petadoptionsystem.dto.Pet;
+import com.prj666.group1.petadoptionsystem.dto.PetAttributesGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.PetGetProfileGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.PetGetProfilePetIdGet200Response;
 import com.prj666.group1.petadoptionsystem.dto.UserUploadImagePost200Response;
@@ -36,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-11T06:31:19.046953700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "pet", description = "Operations about Pets")
 @RequestMapping("${openapi.petAdoptionSystem.base-path:}")
@@ -76,6 +77,35 @@ public interface PetApi {
     
     ResponseEntity<ModelApiResponse> petAddProfilePost(
         @Parameter(name = "Pet", description = "", required = true) @Valid @RequestBody Pet pet
+    );
+
+
+    /**
+     * GET /pet/attributes : Get a list of all pet attributes grouped by Attribute Group
+     *
+     * @return A list of attributes (status code 200)
+     */
+    @Operation(
+        operationId = "petAttributesGet",
+        summary = "Get a list of all pet attributes grouped by Attribute Group",
+        tags = { "pet" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "A list of attributes", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PetAttributesGet200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pet/attributes",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<PetAttributesGet200Response> petAttributesGet(
+        
     );
 
 

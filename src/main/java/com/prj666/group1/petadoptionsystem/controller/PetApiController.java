@@ -4,6 +4,7 @@ import com.prj666.group1.petadoptionsystem.api.PetApi;
 import com.prj666.group1.petadoptionsystem.dto.*;
 import com.prj666.group1.petadoptionsystem.mappers.ModelToDtoMapper;
 import com.prj666.group1.petadoptionsystem.model.User;
+import com.prj666.group1.petadoptionsystem.repository.AttributeGroupRepository;
 import com.prj666.group1.petadoptionsystem.repository.PetRepository;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
 import com.prj666.group1.petadoptionsystem.service.ImageService;
@@ -40,6 +41,9 @@ public class PetApiController implements PetApi {
     @Autowired
     private ModelToDtoMapper modelToDtoMapper;
 
+    @Autowired
+    private AttributeGroupRepository attributeGroupRepository;
+
     @Override
     public ResponseEntity<ModelApiResponse> petAddProfilePost(Pet pet) {
         User user = userService.getUserFromContext();
@@ -63,6 +67,17 @@ public class PetApiController implements PetApi {
                 .body(new ModelApiResponse()
                         .success(true)
                         .message("Pet profile updated successfully")
+                );
+    }
+
+    @Override
+    public ResponseEntity<PetAttributesGet200Response> petAttributesGet() {
+        User user = userService.getUserFromContext();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PetAttributesGet200Response()
+                        .success(true)
+                        .message("Pet attributes Loaded successfully")
+                        .payload(modelToDtoMapper.mapAttributeGroups(user, attributeGroupRepository.findAll()))
                 );
     }
 

@@ -6,6 +6,8 @@ import com.prj666.group1.petadoptionsystem.mappers.ModelToDtoMapper;
 import com.prj666.group1.petadoptionsystem.model.Attribute;
 import com.prj666.group1.petadoptionsystem.model.AttributeGroup;
 import com.prj666.group1.petadoptionsystem.model.User;
+import com.prj666.group1.petadoptionsystem.repository.AttributeGroupRepository;
+import com.prj666.group1.petadoptionsystem.repository.AttributeRepository;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
 import com.prj666.group1.petadoptionsystem.service.ImageService;
 import com.prj666.group1.petadoptionsystem.service.UserService;
@@ -41,6 +43,12 @@ public class UserApiController implements UserApi {
 
     @Autowired
     private ModelToDtoMapper modelToDtoMapper;
+
+    @Autowired
+    private AttributeGroupRepository attributeGroupRepository;
+
+    @Autowired
+    private AttributeRepository attributeRepository;
 
     @Override
     public ResponseEntity<UserLoginPost200Response> userLoginPost(UserLoginPostRequest userLoginPostRequest) {
@@ -142,40 +150,56 @@ public class UserApiController implements UserApi {
                     .body(new ModelApiResponse().success(false).message("User is not an adopter"));
         }
 
+        Map<String, AttributeGroup> groups = attributeGroupRepository.findAll()
+                .stream().collect(Collectors.toMap(AttributeGroup::getName, g -> g));
+
+        Map<String, Map<String, Attribute>> mapAttrs = attributeRepository.findAll()
+                .stream().collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        g -> g.getValue().stream()
+                                .collect(Collectors.toMap(Attribute::getName, a -> a))
+                        )
+                );
+
         ArrayList<String> errors = new ArrayList<>();
 
         List<Attribute> preferences = requestBody.entrySet().stream().flatMap(a -> {
-                    Optional<AttributeGroup> attributeGroup = attributeService.getAttributeGroupByName(a.getKey());
-                    if(attributeGroup.isEmpty()) {
-                        errors.add("Unknown attribute group: " + a.getKey());
-                        return Stream.empty();
-                    }
-                    AttributeGroup group = attributeGroup.get();
-                    List<String> values = a.getValue();
-                    if(values == null || values.isEmpty()){
-                        return Stream.empty();
-                    }
-                    if(values.size() > 1 && !group.isMultivalued()){
-                        errors.add("Can't have more than one value for this attribute group: " +
-                                a.getKey() + " : " + values);
-                        return Stream.empty();
-                    }
+            boolean otherGroup = a.getKey().endsWith("Other");
+            AttributeGroup attributeGroup = otherGroup ?
+                    groups.get(a.getKey().replace("Other","")) : groups.get(a.getKey());
+            if(attributeGroup == null) {
+                errors.add("Unknown attribute group: " + a.getKey());
+                return Stream.empty();
+            }
+            List<String> values = a.getValue();
+            if(values == null || values.isEmpty()){
+                return Stream.empty();
+            }
+            Map<String, Attribute> groupAttributes = mapAttrs.computeIfAbsent(attributeGroup.getId(), k -> new HashMap<>());
 
-                    Map<String, Attribute> attributes = attributeService.getAttributesByGroup(group.getId())
-                            .stream().collect(Collectors.toMap(Attribute::getName, attr -> attr));
-
-                    Map<String, Attribute> selectedAttributes = values.stream()
-                            .map(attr -> {
-                                Attribute at = attributes.get(attr);
-                                if(at == null){
-                                    errors.add("Unrecognized attribute value: " + a.getKey() + " : " + attr);
-                                }
-                                return at;
-                            })
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toMap(Attribute::getName, attr -> attr));
-                    return selectedAttributes.values().stream();
-                }).toList();
+            Map<String, Attribute> selectedAttributes = values.stream()
+                    .map(attr -> {
+                        Attribute at = groupAttributes.get(attr);
+                        if(at == null){
+                            if(otherGroup){
+                                at = new Attribute();
+                                at.setName(attr);
+                                at.setAttributeGroupId(attributeGroup.getId());
+                                attributeRepository.save(at);
+                                groupAttributes.put(attr, at);
+                            } else {
+                                errors.add("Unrecognized attribute value: " + a.getKey() + " : " + attr);
+                            }
+                        }
+                        return at;
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(Attribute::getName, attr -> attr));
+            return selectedAttributes.values().stream();
+        }).toList();
 
         if(!errors.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

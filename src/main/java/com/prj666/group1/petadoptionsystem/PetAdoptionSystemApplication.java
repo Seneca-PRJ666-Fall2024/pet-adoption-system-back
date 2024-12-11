@@ -32,12 +32,12 @@ public class PetAdoptionSystemApplication {
 		Map<String, String> groupMap = new HashMap<>();
 
 		String[] attrs = new String[]{
-				"gender","petType","breedType","petColour","petSize","petActivityLevel","petEnvironment","petSocial"
+				"petGender","petType","breedType","petColour","petSize","petActivityLevel","petEnvironment","petSocial"
 		};
 
 		for(String attr : attrs){
 			if(!existingGroups.contains(attr)){
-				AttributeGroup ag = new AttributeGroup(attr, false, false);
+				AttributeGroup ag = new AttributeGroup(attr, false, false, attr, attr, attr, false);
 				attributeGroupRepository.save(ag);
 				groupMap.put(attr, ag.getId());
 			} else {
@@ -45,24 +45,22 @@ public class PetAdoptionSystemApplication {
 			}
 		}
 		Map<String, String[]> targetMap = new HashMap<>();
-		targetMap.put("gender", new String[]{"male", "female"});
+		targetMap.put("petGender", new String[]{"male", "female"});
 		targetMap.put("petType", new String[]{		"cat",
 				"dog",
-				"rabbit",
-				"other"});
+				"rabbit"});
 		targetMap.put("breedType", new String[]{"Poodle", "Chihuahua", "American Bobtail"});
 
 		targetMap.put("petSize", new String[]{"small", "medium", "large"});
-		targetMap.put("petActivityLevel", new String[]{		"very_active",
+		targetMap.put("petActivityLevel", new String[]{		"very active",
 				"active",
 				"quiet"});
 		targetMap.put("petEnvironment", new String[]{		"apartment",
 				"house",
-				"farm_property"});
+				"farm property"});
 		targetMap.put("petSocial", new String[]{		"cats",
 				"dogs",
-				"all animals",
-				"other animals"});
+				"all animals"});
 
 		for(Map.Entry<String, String[]> entry : targetMap.entrySet()){
 			String groupId = groupMap.get(entry.getKey());

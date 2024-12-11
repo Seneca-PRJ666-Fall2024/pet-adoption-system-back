@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.prj666.group1.petadoptionsystem.dto.Role;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,7 +23,7 @@ import jakarta.annotation.Generated;
  * User
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-11T06:31:19.046953700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class User {
 
   private String userId;
@@ -44,6 +47,9 @@ public class User {
   private String postalCode;
 
   private String imageUrl;
+
+  @Valid
+  private Map<String, List<String>> preferences = new HashMap<>();
 
   public User userId(String userId) {
     this.userId = userId;
@@ -265,6 +271,34 @@ public class User {
     this.imageUrl = imageUrl;
   }
 
+  public User preferences(Map<String, List<String>> preferences) {
+    this.preferences = preferences;
+    return this;
+  }
+
+  public User putPreferencesItem(String key, List<String> preferencesItem) {
+    if (this.preferences == null) {
+      this.preferences = new HashMap<>();
+    }
+    this.preferences.put(key, preferencesItem);
+    return this;
+  }
+
+  /**
+   * Get preferences
+   * @return preferences
+   */
+  @Valid 
+  @Schema(name = "preferences", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("preferences")
+  public Map<String, List<String>> getPreferences() {
+    return preferences;
+  }
+
+  public void setPreferences(Map<String, List<String>> preferences) {
+    this.preferences = preferences;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -284,12 +318,13 @@ public class User {
         Objects.equals(this.city, user.city) &&
         Objects.equals(this.province, user.province) &&
         Objects.equals(this.postalCode, user.postalCode) &&
-        Objects.equals(this.imageUrl, user.imageUrl);
+        Objects.equals(this.imageUrl, user.imageUrl) &&
+        Objects.equals(this.preferences, user.preferences);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, role, username, email, password, phone, address, city, province, postalCode, imageUrl);
+    return Objects.hash(userId, role, username, email, password, phone, address, city, province, postalCode, imageUrl, preferences);
   }
 
   @Override
@@ -307,6 +342,7 @@ public class User {
     sb.append("    province: ").append(toIndentedString(province)).append("\n");
     sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
     sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
+    sb.append("    preferences: ").append(toIndentedString(preferences)).append("\n");
     sb.append("}");
     return sb.toString();
   }

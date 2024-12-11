@@ -1,22 +1,15 @@
 package com.prj666.group1.petadoptionsystem.mappers;
 
-
 import com.prj666.group1.petadoptionsystem.dto.Role;
-import com.prj666.group1.petadoptionsystem.model.Adoption;
-import com.prj666.group1.petadoptionsystem.model.Pet;
-import com.prj666.group1.petadoptionsystem.model.Recommendation;
-import com.prj666.group1.petadoptionsystem.model.User;
-import com.prj666.group1.petadoptionsystem.repository.PetRepository;
-import com.prj666.group1.petadoptionsystem.repository.UserRepository;
+import com.prj666.group1.petadoptionsystem.model.*;
+import com.prj666.group1.petadoptionsystem.repository.*;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,6 +23,14 @@ public class ModelToDtoMapper {
 
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private PreferenceRepository preferenceRepository;
+
+    @Autowired
+    private AttributeRepository attributeRepository;
+    @Autowired
+    private AttributeGroupRepository attributeGroupRepository;
 
     public List<com.prj666.group1.petadoptionsystem.dto.Recommendation> mapRecommendations(List<Recommendation> recommendations) {
         Set<String> petIds = recommendations.stream().map(Recommendation::getPetId).collect(Collectors.toSet());
@@ -66,6 +67,42 @@ public class ModelToDtoMapper {
     }
 
     public List<com.prj666.group1.petadoptionsystem.dto.User> mapUsers(List<User> users) {
+
+        List<Preference> allUserPrefs = preferenceRepository.findAllByUserId(users.stream().map(User::getId).toList());
+
+        Set<String> attributes = allUserPrefs.stream().map(Preference::getAttributeId)
+                .collect(Collectors.toSet());
+
+        Map<String, Attribute> attributeMap = attributeRepository.findAllById(attributes)
+                .stream()
+                .collect(Collectors.toMap(Attribute::getId, a -> a));
+
+        Set<String> attrGroups = attributeMap.values().stream().map(Attribute::getAttributeGroupId)
+                .collect(Collectors.toSet());
+
+        Map<String, AttributeGroup> attributeGroupMap = attributeGroupRepository.findAllById(attrGroups)
+                .stream()
+                .collect(Collectors.toMap(AttributeGroup::getId, a -> a));
+
+        Map<String, Map<String, List<String>>> userPrefs = allUserPrefs.stream()
+                .collect(Collectors.groupingBy(Preference::getUserId))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, a ->
+                    a.getValue()
+                            .stream()
+                            .map(attr -> attributeMap.get(attr.getAttributeId()))
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                            .entrySet()
+                            .stream()
+                            .collect(Collectors.toMap(
+                                    ag -> attributeGroupMap.get(ag.getKey()).getName(),
+                                    ag -> ag.getValue().stream().map(Attribute::getName).toList()
+                            ))
+                ));
+
+
         return users.stream().map(u -> new com.prj666.group1.petadoptionsystem.dto.User()
                     .userId(u.getId())
                     .username(u.getName())
@@ -77,6 +114,7 @@ public class ModelToDtoMapper {
                     .province(u.getProvince())
                     .postalCode(u.getPostalCode())
                     .role(u.getAccountType())
+                        .preferences(userPrefs.get(u.getId()))
                 ).toList();
     }
 
@@ -108,5 +146,28 @@ public class ModelToDtoMapper {
                     a.getAnswers().forEach(adoption::putAdditionalProperty);
                     return adoption;
                 }).toList();
+    }
+
+    public List<com.prj666.group1.petadoptionsystem.dto.AttributeGroup> mapAttributeGroups(User user, List<AttributeGroup> attributeGroups) {
+        Map<String, List<String>> attributes =  attributeRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        a -> a.getValue()
+                                .stream()
+                                .map(Attribute::getName).collect(Collectors.toList())
+                ));
+        return attributeGroups.stream()
+                .map(a ->
+                        new com.prj666.group1.petadoptionsystem.dto.AttributeGroup()
+                                .name(a.getName())
+                                .description(a.getDescription())
+                                .question(user.getAccountType() == Role.SHELTER ? a.getShelterQuestion() : a.getAdopterQuestion())
+                                .supportsOther(a.isSupportsOther())
+                                .values(attributes.get(a.getId()))
+                        ).toList();
     }
 }

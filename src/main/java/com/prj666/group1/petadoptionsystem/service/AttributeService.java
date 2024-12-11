@@ -26,8 +26,10 @@ public class AttributeService {
     private PetRepository petRepository;
 
     // Create a new AttributeGroup
-    public AttributeGroup createAttributeGroup(String name, boolean mandatory, boolean multivalued) {
-        AttributeGroup attributeGroup = new AttributeGroup(name, mandatory, multivalued);
+    public AttributeGroup createAttributeGroup(String name, String description, String adopterQuestion,
+                                               String shelterQuestion, boolean mandatory, boolean multivalued,
+                                               boolean supportsOther) {
+        AttributeGroup attributeGroup = new AttributeGroup(name, mandatory, multivalued, description, adopterQuestion, shelterQuestion, supportsOther);
         return attributeGroupRepository.save(attributeGroup);
     }
 
@@ -81,11 +83,7 @@ public class AttributeService {
                                     Map.Entry::getKey,
                                     a -> {
                                         List<String> values =  a.getValue().stream().map(Pair::getSecond).toList();
-                                        if(values.size() > 1){
-                                            throw new IllegalStateException("Multiple values found for attribute: " + a.getKey());
-                                        } else {
-                                            return values.getFirst();
-                                        }
+                                        return values.getFirst();
                                     }
                             ))
             ));
@@ -96,7 +94,9 @@ public class AttributeService {
         if(newAttributes != null && !newAttributes.isEmpty()) {
              return newAttributes.entrySet().stream()
                     .map(a -> {
-                        Optional<AttributeGroup> attGroup = attributeGroupRepository.findByName(a.getKey());
+                        boolean otherGroup = a.getKey().endsWith("Other");
+                        Optional<AttributeGroup> attGroup = attributeGroupRepository.findByName(otherGroup ?
+                                a.getKey().replace("Other","") : a.getKey());
                         if(attGroup.isEmpty()){
                             throw new IllegalArgumentException("AttributeGroup not found with name: " + a.getKey());
                         }
@@ -105,7 +105,14 @@ public class AttributeService {
                                 .collect(Collectors.toMap(Attribute::getName, at -> at))
                                 .get(a.getValue());
                         if(attTarget == null){
-                            throw new IllegalArgumentException("Attribute not found: " + a.getKey() + " : " + a.getValue());
+                            if(otherGroup){
+                                attTarget = new Attribute();
+                                attTarget.setName(a.getValue());
+                                attTarget.setAttributeGroupId(attGroup.get().getId());
+                                attributeRepository.save(attTarget);
+                            } else {
+                                throw new IllegalArgumentException("Attribute not found: " + a.getKey() + " : " + a.getValue());
+                            }
                         }
                         return attTarget.getId();
                     })

@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_user_login_post_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-10T04:35:15.846336200-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-11T06:31:19.046953700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class UserLoginPost200Response {
 
   private Boolean success;
