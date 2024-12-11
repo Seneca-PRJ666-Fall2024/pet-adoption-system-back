@@ -13,6 +13,8 @@ public interface PreferenceRepository extends MongoRepository<Preference, String
 
     void deleteByUserId(String userId);
 
+    List<Preference> findByUserId(String userId);
+
     @Query("{ 'userId': { $in: ?0 } }")
     List<Preference> findAllByUserId(List<String> userIds);
 }

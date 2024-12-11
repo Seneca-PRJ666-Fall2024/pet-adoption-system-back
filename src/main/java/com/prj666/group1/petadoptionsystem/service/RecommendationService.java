@@ -1,21 +1,14 @@
 package com.prj666.group1.petadoptionsystem.service;
 
 import com.prj666.group1.petadoptionsystem.dto.RecommendationStatus;
-import com.prj666.group1.petadoptionsystem.model.Recommendation;
-import com.prj666.group1.petadoptionsystem.model.RecommendationList;
-import com.prj666.group1.petadoptionsystem.model.User;
-import com.prj666.group1.petadoptionsystem.repository.PetRepository;
-import com.prj666.group1.petadoptionsystem.repository.RecommendationListRepository;
-import com.prj666.group1.petadoptionsystem.repository.RecommendationRepository;
-import com.prj666.group1.petadoptionsystem.repository.UserRepository;
+import com.prj666.group1.petadoptionsystem.model.*;
+import com.prj666.group1.petadoptionsystem.repository.*;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +26,15 @@ public class RecommendationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AttributeRepository attributeRepository;
+
+    @Autowired
+    private AttributeGroupRepository attributeGroupRepository;
+
+    @Autowired
+    private PreferenceRepository preferenceRepository;
+
     public List<Recommendation> getNextRecommendation(User user, int number){
 
         if(StringUtils.isNotBlank(user.getRecommendationList())){
@@ -46,6 +48,12 @@ public class RecommendationService {
                 if(!recommend.isEmpty()){
                     return recommend;
                 } else {
+                    recommendationRepository
+                            .deleteAll(recommendationRepository.findByRecommendationListId(list.get().getId())
+                                    .stream()
+                                    .filter(r -> r.getStatus() == RecommendationStatus.NEW)
+                                    .toList()
+                            );
                     recommendationListRepository.delete(list.get());
                 }
             }
@@ -59,6 +67,11 @@ public class RecommendationService {
     }
 
     private RecommendationList createNewRecommendationList(User user){
+        List<String> attributeIdList = preferenceRepository.findByUserId(user.getId())
+                .stream()
+                .map(Preference::getAttributeId)
+                .toList();
+
         List<Recommendation> pastRec = recommendationRepository.findByUserId(user.getId());
         Set<String> alreadyConsideredPets = pastRec.stream()
                 .filter(r -> r.getStatus() == RecommendationStatus.ACCEPTED || r.getStatus() == RecommendationStatus.REJECTED)
@@ -83,7 +96,41 @@ public class RecommendationService {
         user.setRecommendationList(newList.getId());
         userRepository.save(user);
 
-        petRepository.findAll().stream().filter(p -> !alreadyConsideredPets.contains(p.getId()))
+        Map<String, Set<String>> preferredAttributes = attributeRepository.findAllById(attributeIdList)
+                .stream()
+                .collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        gr -> gr.getValue().stream()
+                                .map(Attribute::getId)
+                                .collect(Collectors.toSet()))
+                );
+
+        Map<String, Set<String>> allAttributes = attributeRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Attribute::getAttributeGroupId))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        gr -> gr.getValue().stream()
+                                .map(Attribute::getId)
+                                .collect(Collectors.toSet()))
+                );
+
+        Set<String> blacklistedAttributes = preferredAttributes.entrySet()
+                .stream()
+                .flatMap(prefGroup -> {
+                        Set<String> targetGroup =  allAttributes.getOrDefault(prefGroup.getKey(), new HashSet<>());
+                        targetGroup.removeAll(prefGroup.getValue());
+                        return targetGroup.stream();
+                    }
+                ).collect(Collectors.toSet());
+
+        petRepository.findAll().stream()
+                .filter(p -> !alreadyConsideredPets.contains(p.getId()))
+                .filter(p -> p.getAttributes().stream()
+                        .noneMatch(blacklistedAttributes::contains)
+                )
                 .limit(5)
                 .map(p -> new Recommendation(newList.getId(), p.getId(), user.getId(), LocalDate.now(), RecommendationStatus.NEW))
                 .forEach(recommendationRepository::save);

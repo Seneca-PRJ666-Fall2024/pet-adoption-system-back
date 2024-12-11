@@ -8,6 +8,8 @@ import com.prj666.group1.petadoptionsystem.model.AttributeGroup;
 import com.prj666.group1.petadoptionsystem.model.User;
 import com.prj666.group1.petadoptionsystem.repository.AttributeGroupRepository;
 import com.prj666.group1.petadoptionsystem.repository.AttributeRepository;
+import com.prj666.group1.petadoptionsystem.repository.RecommendationListRepository;
+import com.prj666.group1.petadoptionsystem.repository.RecommendationRepository;
 import com.prj666.group1.petadoptionsystem.service.AttributeService;
 import com.prj666.group1.petadoptionsystem.service.ImageService;
 import com.prj666.group1.petadoptionsystem.service.UserService;
@@ -49,6 +51,12 @@ public class UserApiController implements UserApi {
 
     @Autowired
     private AttributeRepository attributeRepository;
+
+    @Autowired
+    private RecommendationListRepository recommendationListRepository;
+
+    @Autowired
+    private RecommendationRepository recommendationRepository;
 
     @Override
     public ResponseEntity<UserLoginPost200Response> userLoginPost(UserLoginPostRequest userLoginPostRequest) {
@@ -207,6 +215,20 @@ public class UserApiController implements UserApi {
         } else {
             userService.updateUserPreferences(user, preferences);
             user.setProfileSet(true);
+            if(user.getRecommendationList() != null){
+                recommendationListRepository.findByUserId(user.getId())
+                        .forEach(l -> {
+                            recommendationListRepository.delete(l);
+                            recommendationRepository
+                                    .deleteAll(recommendationRepository.findByRecommendationListId(l.getId())
+                                            .stream()
+                                            .filter(r -> r.getStatus() == RecommendationStatus.NEW)
+                                            .toList()
+                                    );
+
+                        });
+                user.setRecommendationList(null);
+            }
             userService.saveUser(user);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ModelApiResponse().success(true).message("User preferences saved"));
