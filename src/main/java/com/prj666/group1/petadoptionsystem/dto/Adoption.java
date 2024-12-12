@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
  * Adoption
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-11T06:31:19.046953700-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-12-11T16:53:22.577455-05:00[America/Toronto]", comments = "Generator version: 7.7.0")
 public class Adoption {
 
   private String adoptionId;
